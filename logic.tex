@@ -1,0 +1,82 @@
+
+\subsection{Syntax}
+
+A \emph{state formula} $\phi$ is of the form
+\[
+  \top \ |\ 
+  p \ |\ 
+  \neg \phi \ |\ 
+  \phi \wedge \phi \ |\ 
+  \PJ{J} (\psi)
+\]
+where $\psi$ is a \emph{path formula} of the form
+\[
+  \X \psi \ |\ 
+  \psi \until \psi \ |\ 
+  \psi \until^{\leq n} \psi.
+\]
+
+\subsection{Semantics}
+
+Let $M = (\Act, S, p, L)$ be an MDP, $s \in S$, and $\phi$ a PCTL
+state formula. Define $M, s \models \phi$ as follows.
+
+\[
+\myPr{s}{K}{\phi} =
+\Pr [ \{ \pi : K, \pi \models \psi \textmd{ with } \pi_0 = s \} ].
+\]
+
+
+\begin{eqnarray*}
+  M, s \models \top\\
+  M, s \models p  & \textmd{ if } &  p \in L(s)\\
+  M, s \models \neg \phi  & \textmd{ if } &  M, s \not\models \phi\\
+  M, s \models \phi \wedge \phi'
+  & \textmd{ if } & M, s \models \phi \textmd{ and }
+                    M, s \models \phi'\\
+  M, s \models \PJ{J} \psi
+  & \textmd{ if } &
+  \myPr{s}{M_{\scheduler{S}}}{\psi} \in J
+  \textmd{ for every scheduler } \scheduler{S}
+\end{eqnarray*}
+
+\begin{eqnarray*}
+  K, \pi \models \X \psi
+  & \textmd{ if } &
+  K, \pi[1] \models \psi\\
+  K, \pi \models \psi \until \psi'
+  & \textmd{ if } &
+  \textmd{there is a } j \geq 0 \textmd{ such that }
+  K, \pi[j] \models \psi' \textmd{ and } \\
+  & & K, \pi[k] \models \psi
+      \textmd{ for every } 0 \leq k < j \\
+  K, \pi \models \psi \until^{\leq n} \psi'
+  & \textmd{ if } &
+  \textmd{there is a } n \geq j \geq 0 \textmd{ such that }
+  K, \pi[j] \models \psi' \textmd{ and } \\
+  & & K, \pi[k] \models \psi \textmd{ for every } 0 \leq k < j
+\end{eqnarray*}
+
+
+Let $P = (M, \Obs, r)$ be a POMDP, $\info \in \info (S)$, and
+$\phi$ a PCTL state formula. Define
+\begin{eqnarray*}
+  \myE{\info}{K}{\psi} = E_{\info} [K, \pi \models \psi
+  \textmd{ with } \pi_0 = s].
+\end{eqnarray*}
+Define $P, \info \models \phi$ as follows.
+\begin{eqnarray*}
+  P, \info \models \top \\
+  P, \info \models p & \textmd{ if } & \info \in \valueof{p}\\
+  P, \info \models \neg \phi & \textmd{ if } & P, \info \not\models \phi\\
+  P, \info \models \phi \wedge \phi' & \textmd{ if } &
+       P, \info \models \phi \textmd{ and } P, \info \models \phi'\\
+  P, \info \models \PJ{J} (\psi) & \textmd{ if } &
+       \myE{\info}{M_{\scheduler{S}}}{\psi} \in J \\
+  P, \info \models \dpriv{\epsilon}{\delta} (\psi) & \textmd{ if } &
+       \myE{\info}{M_{\scheduler{S}}}{\psi} \leq e^{\epsilon}
+       \myE{\info'}{M_{\scheduler{S}}}{\psi} + \delta \textmd{ and }\\
+  &&   \myE{\info'}{M_{\scheduler{S}}}{\psi} \leq e^{\epsilon}
+       \myE{\info}{M_{\scheduler{S}}}{\psi} + \delta \textmd{ for
+     every } \info N \info'.
+\end{eqnarray*}

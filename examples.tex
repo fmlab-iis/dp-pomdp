@@ -1,0 +1,374 @@
+
+
+\begin{figure}
+  \centering
+  \resizebox{.6\columnwidth}{!}{
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+      distance=2cm,node/.style={circle,draw}]
+      \node[node] (p) at ( -1.5,  0) { $+$ };
+      \node[node] (n) at (  1.5,  0) { $-$ };
+      \node[node] (Y) at (  0,  1.5) { $Y$ };
+      \node[node] (N) at (  0, -1.5) { $N$ };
+
+      \node at (1.5,  2) {
+        $
+        \begin{array}{l}
+          H:\bot(1),L:\bot(1)
+        \end{array}
+        $ };
+      \node at (-1.5, -2) { 
+        $
+        \begin{array}{l}
+          H:\bot(1),L:\bot(1)
+        \end{array}
+        $ };
+
+      \path
+      (p) edge [bend left] node [above, left=2] { $H(\frac{7}{8})$ } (Y)
+      (p) edge [bend right] node [below, left=2] { $H(\frac{1}{8})$ } (N)
+      (p) edge node [below=8, right=-4] { $L(\frac{3}{4})$ } (Y)
+      (p) edge node [above=8, right=-4] { $L(\frac{1}{4})$ } (N)
+      (n) edge [bend right] node [above, right=2] { $H(\frac{1}{8})$ } (Y)
+      (n) edge [bend left]node [below, right=2] { $H(\frac{7}{8})$ } (N)
+      (n) edge node [below=8, left=-4] { $L(\frac{1}{4})$ } (Y)
+      (n) edge node [above=8, left=-4] { $L(\frac{3}{4})$ } (N)
+
+      (Y) edge [loop above] node [left] { H(1), L(1) } (Y)
+      (N) edge [loop below] node [right] { H(1), L(1) } (N)
+      ;
+      \end{tikzpicture}
+    }
+  \caption{Survey Query 0}
+  \label{figure:survey-0}
+\end{figure}
+
+Let $(\Pr (s = +), \Pr (s = Y), \Pr (s = N), \Pr (s = -))^T$ denote a
+state distribution. In Figure~\ref{figure:survey-0}, we have
+\[
+  \begin{array}{rclcrcl}
+    P^H & = &
+      \left(
+         \begin{array}{cccc}
+           \  & \frac{7}{8} & \frac{1}{8} & \ \\
+              &           1 &             &  \\
+              &             &           1 &  \\
+              & \frac{1}{8} & \frac{7}{8} &  
+         \end{array}
+\hide{              
+         \begin{array}{cccc}
+           0  & .875 & .125 & \ \\
+              &    1 &      &  \\
+              &      &    1 &  \\
+              & .125 & .875 & 0 
+         \end{array}
+}
+      \right)
+    & 
+    &
+    P^L & = &
+      \left(
+         \begin{array}{cccc}
+           \  & \frac{3}{4} & \frac{1}{4} & \ \\
+              &           1 &             &   \\
+              &             &           1 &   \\
+              & \frac{1}{4} & \frac{3}{4} &   
+         \end{array}
+\hide{
+         \begin{array}{cccc}
+           0  & .75 & .25 & \ \\
+              &   1 &     &   \\
+              &     &   1 &   \\
+              & .25 & .75 & 0
+         \end{array}
+}
+      \right)
+  \end{array}
+\]
+and
+\[
+  \begin{array}{rclcrcl}
+    O^H (\bot) & = &
+      \left(
+         \begin{array}{cccc}
+           0 & \ & \ & \  \\
+             & 1 &   &    \\
+             &   & 1 &    \\
+             &   &   &  0 
+         \end{array}
+      \right)
+    &&
+    O^L (\bot) & = &
+      \left(
+         \begin{array}{cccc}
+           0 & \ & \ & \  \\
+             & 1 &   &    \\
+             &   & 1 &    \\
+             &   &   &  0 
+         \end{array}
+      \right)
+  \end{array}
+\]
+Consider the state distribution $(\frac{1}{2}, 0, 0, \frac{1}{2})^T$.
+Let $a:\omega$ denote that $\omega$ is observed after $a$. We have
+\[
+  (\frac{1}{2}, 0, 0, \frac{1}{2})^T
+  \overset{H:\bot}{\longrightarrow}
+  (0, \frac{1}{2}, \frac{1}{2}, 0)^T
+  \overset{H:\bot}{\longrightarrow}
+  (0, \frac{1}{2}, \frac{1}{2}, 0)^T.
+\]
+Now consider the probability of reaching the state $Y$ in one
+action. We compute
+\[
+  \Gamma_2 = \{ (0, 1, 0, 0)^T \}
+  \textmd{ and }
+  \Gamma_1 = \{ (\frac{7}{8}, 1, 0, \frac{1}{8})^T (H),
+                (\frac{3}{4}, 1, 0, \frac{1}{4})^T (L) \}.
+\]
+That is, for the state distribution $(\frac{1}{2}, 0, 0,
+\frac{1}{2})^T$, the probability of reaching $Y$ is $0.5$ by taking
+either action. For
+the state distribution $(1, 0, 0, 0)^T$, the maximal probability of
+reaching $Y$ becomes $\frac{7}{8}$ by taking the action $H$.
+
+
+\begin{figure}
+  \centering
+  \resizebox{.6\columnwidth}{!}{
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+      distance=2cm,node/.style={circle,draw}]
+      \node[node] (p) at ( -1.5,  0) { $+$ };
+      \node[node] (n) at (  1.5,  0) { $-$ };
+      \node[node] (Y) at (  0,  1.5) { $Y$ };
+      \node[node] (N) at (  0, -1.5) { $N$ };
+
+      \node at (1.4,  2) {
+        $
+        \begin{array}{l}
+          H:Y(1)|N(0)\\L:Y(1)|N(0)          
+        \end{array}
+        $ };
+      \node at (-1.4, -2) { 
+        $
+        \begin{array}{l}
+          H:Y(0)|N(1)\\L:Y(0)|N(1)          
+        \end{array}
+        $ };
+
+      \path
+      (p) edge [bend left] node [above, left=2] { $H(\frac{7}{8})$ } (Y)
+      (p) edge [bend right] node [below, left=2] { $H(\frac{1}{8})$ } (N)
+      (p) edge node [below=8, right=-4] { $L(\frac{3}{4})$ } (Y)
+      (p) edge node [above=8, right=-4] { $L(\frac{1}{4})$ } (N)
+      (n) edge [bend right] node [above, right=2] { $H(\frac{1}{8})$ } (Y)
+      (n) edge [bend left]node [below, right=2] { $H(\frac{7}{8})$ } (N)
+      (n) edge node [below=8, left=-4] { $L(\frac{1}{4})$ } (Y)
+      (n) edge node [above=8, left=-4] { $L(\frac{3}{4})$ } (N)
+
+      (Y) edge [loop above] node [left] { H(1), L(1) } (Y)
+      (N) edge [loop below] node [right] { H(1), L(1) } (N)
+      ;
+      \end{tikzpicture}
+    }
+  \caption{Survey Query 1}
+  \label{figure:survey-1}
+\end{figure}
+
+Let $(\Pr (s = +), \Pr (s = Y), \Pr (s = N), \Pr (s = -))^T$ denote a
+state distribution. In Figure~\ref{figure:survey-1}, we have
+\[
+  \begin{array}{rclcrcl}
+    P^H & = &
+      \left(
+         \begin{array}{cccc}
+           \  & \frac{7}{8} & \frac{1}{8} & \ \\
+              &           1 &             &  \\
+              &             &           1 &  \\
+              & \frac{1}{8} & \frac{7}{8} &  
+         \end{array}
+      \right)
+    & 
+    &
+    P^L & = &
+      \left(
+         \begin{array}{cccc}
+           \  & \frac{3}{4} & \frac{1}{4} & \ \\
+              &           1 &             &   \\
+              &             &           1 &   \\
+              & \frac{1}{4} & \frac{3}{4} &   
+         \end{array}
+      \right)
+  \end{array}
+\]
+and
+\[
+  \begin{array}{rclcrclcrclcrcl}
+    O^H (Y) & = &
+      \left(
+         \begin{array}{cccc}
+           0 & \ & \ & \  \\
+             & 1 &   &    \\
+             &   & 0 &    \\
+             &   &   &  0 
+         \end{array}
+      \right)
+    &&
+    O^H (N) & = &
+      \left(
+         \begin{array}{cccc}
+           0 & \ & \ & \  \\
+             & 0 &   &    \\
+             &   & 1 &    \\
+             &   &   &  0 
+         \end{array}
+      \right)
+    &&
+    O^L (Y) & = &
+      \left(
+         \begin{array}{cccc}
+           0 & \ & \ & \  \\
+             & 1 &   &    \\
+             &   & 0 &    \\
+             &   &   &  0 
+         \end{array}
+      \right)
+    &&
+    O^L (N) & = &
+      \left(
+         \begin{array}{cccc}
+           0 & \ & \ & \  \\
+             & 0 &   &    \\
+             &   & 1 &    \\
+             &   &   &  0 
+         \end{array}
+      \right)
+  \end{array}
+\]
+Consider the state distribution $(\frac{1}{2}, 0, 0, \frac{1}{2})^T$.
+Let $a:\omega$ denote that $\omega$ is observed after $a$. We have
+\[
+  (\frac{1}{2}, 0, 0, \frac{1}{2})^T
+  \overset{H:Y}{\longrightarrow}
+  (0, 1, 0, 0)^T
+  \overset{H:Y}{\longrightarrow}
+  (0, 1, 0, 0)^T.
+\]
+Now consider the probability of reaching the state $Y$ in one
+action. We compute
+\[
+  \Gamma_2 = \{ (0, 1, 0, 0)^T \}
+  \textmd{ and }
+  \Gamma_1 = \{ (\frac{7}{8}, 1, 0, \frac{1}{8})^T (H),
+                (\frac{3}{4}, 1, 0, \frac{1}{4})^T (L) \}.
+\]
+That is, for the state distribution $(\frac{1}{2}, 0, 0,
+\frac{1}{2})^T$, the probability of reaching $Y$ is $0.5$ by
+taking either action. For
+the state distribution $(1, 0, 0, 0)^T$, the maximal probability of
+reaching $Y$ becomes $\frac{7}{8}$ by taking the action $H$.
+
+\begin{figure}
+  \centering
+  \resizebox{.9\columnwidth}{!}{
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+      distance=2cm,node/.style={circle,draw}]
+      \node[node] (p) at ( -.5,  0) { $+$ };
+      \node[node] (n) at (  .5,  0) { $-$ };
+
+      \node at (-2, 0) {
+        $
+        \begin{array}{c}
+          H:Y(\frac{7}{8})|N(\frac{1}{8})\\
+          L:Y(\frac{3}{4})|N(\frac{1}{4})
+        \end{array}
+        $
+      };
+      \node at ( 2, 0) {
+        $
+        \begin{array}{c}
+          H:Y(\frac{1}{8})|N(\frac{7}{8})\\
+          L:Y(\frac{1}{4})|N(\frac{3}{4})
+        \end{array}
+        $
+      };
+
+      \path
+      (p) edge [loop above] node { $H(1)$ } (p)
+      (p) edge [loop below] node { $L(1)$ } (p)
+      (n) edge [loop above] node { $H(1)$ } (n)
+      (n) edge [loop below] node { $L(1)$ } (n)
+      ;
+      \end{tikzpicture}
+    }
+  \caption{Survey Query 2}
+  \label{figure:survey-2}
+\end{figure}
+
+For Figure~\ref{figure:survey-2}, we have
+\[
+  \begin{array}{rcccl}
+    P^H & = &
+      \left(
+         \begin{array}{cc}
+           1 & \ \\
+             & 1 
+         \end{array}
+      \right)
+    & = & P^L
+  \end{array}
+\]
+and
+\[
+  \begin{array}{rclcrclcrclcrcl}
+    O^H (Y) & = &
+      \left(
+         \begin{array}{cc}
+           \frac{7}{8} & \\
+                       & \frac{1}{8} 
+         \end{array}
+      \right)
+    &&
+    O^H (N) & = &
+      \left(
+         \begin{array}{cc}
+           \frac{1}{8} & \\
+                       & \frac{7}{8} 
+         \end{array}
+      \right)
+    &&
+    O^L (Y) & = &
+      \left(
+         \begin{array}{cc}
+           \frac{3}{4} & \\
+                       & \frac{1}{4} 
+         \end{array}
+      \right)
+    &&
+    O^L (N) & = &
+      \left(
+         \begin{array}{cc}
+           \frac{1}{4} & \\
+                       & \frac{3}{4} 
+         \end{array}
+      \right)
+  \end{array}
+\]
+Consider the state distriution $(\frac{1}{2}, \frac{1}{2})^T$. We have
+\[
+  (\frac{1}{2}, \frac{1}{2})^T
+  \overset{H:Y}{\longrightarrow}
+  (\frac{7}{8}, \frac{1}{8})^T
+  \overset{H:Y}{\longrightarrow}
+  (\frac{49}{50}, \frac{1}{50})^T.
+\]
+Moreover, let us compute the maximal expectation of reaching $+$ in
+one action.
+\[
+  \Gamma_2 = \{ (1, 0)^T \} \textmd{ and }
+  \Gamma_1 = \{ (1, 0)^T \}.
+\]
+From the state distriution $(\frac{1}{2}, \frac{1}{2})^T$, the maximal
+expectation of reaching $+$ is hence $0.5$. This is expected since no
+action can change the current state. If the probability of at state
+$+$ is $0.5$ \emph{a priori}, the probability of reaching $+$ after
+one action is again $0.5$ regardless of actions and observations.
