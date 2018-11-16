@@ -1,4 +1,17 @@
 
+A \emph{Markov Chain (MC)} $K = (S, p, L)$ consists of a set $S$ of
+\emph{states}, a \emph{labelling function} $L : S \rightarrow
+2^{\AP}$, and a \emph{transition distribution} $p : S \times S
+\rightarrow \bbfRU$ such that $\sum_{t \in S} p (s, t) = 1$ for every
+$s \in S$. When the set $S$ of states is finite, we say $K$ is a
+\emph{finite} MC. 
+
+A \emph{Hidden Markov Model} $H = (K, \Obs, r)$ is a finite MC $K =
+(S, p, L)$ with a finite set $\Obs$ of \emph{observations} and an
+\emph{observation distribution} $o : S \times \Obs \rightarrow \bbfRU$
+such that $\sum_{\obs \in \Obs} o (s, \obs) = 1$ for every $\obs \in
+\Obs$. An HMM models a MC with incomplete information. 
+
 A \emph{Markov decision process (MDP)} $M = (\Act, S, p, L)$ consists of
 a finite set $\Act$ of \emph{actions}, a set $S$ of \emph{states}, a
 \emph{labelling function} $L : S \rightarrow 2^{\AP}$, and 
@@ -8,7 +21,7 @@ for every $a \in \Act$ and $s \in S$. If the set of states is finite,
 we say $M$ is a \emph{finite} MDP.
 
 A \emph{partially observable Markov decision process (POMDP)} $P =
-(M, \Obs, r)$ is a finite MDP $M = (\Act, S, p, L)$ with a finite set
+(M, \Obs, o)$ is a finite MDP $M = (\Act, S, p, L)$ with a finite set
 $\Obs$ of \emph{observations} and an \emph{observation distribution} $o
 : \Act  \times S \times \Obs \rightarrow \bbfRU$ such that $\sum_{\obs
   \in \Obs} o (a, s, \obs) = 1$ for every $a \in \Act$ and $s \in S$.
