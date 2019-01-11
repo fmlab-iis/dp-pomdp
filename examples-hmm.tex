@@ -13,12 +13,6 @@ know that John has $50\%$ of chance to have the disease. If the
 population has much lower rate of contracting the disease, John's
 privacy is undoubtedly intruded by our probabilistic inference.
 
-\noindent
-\textit{Example 1.}
-The $\frac{1}{2}$-geometric mechanism is known to be
-$\ln(2)$-differentially private. 
-
-
 \begin{figure}
   \centering
   \resizebox{.6\columnwidth}{!}{
@@ -93,28 +87,55 @@ $\ln(2)$-differentially private.
   \label{figure:geometric-mechanism}
 \end{figure}
 
-Consider the truncated $\frac{1}{2}$-geometric mechanism shown in
-Figure~\ref{figure:geometric-mechanism}. At the state $\underline{0}$,
-$0$ is observed with probability $1$ but $1$ and $2$ cannot be
+\noindent
+\textit{Example 1.}
+To see how differential privacy works, let us consider the truncated
+$\frac{1}{2}$-geometric mechanism
+(Figure~\ref{figure:geometric-mechanism}). 
+In the figure, the states $0$, $1$, and $2$ denote the number of
+individuals contracting the disease; the states $\underline{0}$,
+$\underline{1}$, $\underline{2}$ denote the outputs of the
+mechanism. At the state $\underline{0}$, \textit{zero} is observed
+with probability $1$ but \textit{one} and \textit{two} can never be 
 observed. Similarly, the states $\underline{1}$ and $\underline{2}$
-only observe $1$ and $2$ respectively. A prior knowledge is an
-information state where the probabilities at the states $\underline{0}$,
-$\underline{1}$, and $\underline{2}$ are $0$. That is, the probability
-distribution on the states $0$, $1$, and $2$ is known \emph{a priori}.
+only observe \textit{one} and \textit{two} respectively. 
 In the figure, thin arrows denote transitions with probability
-$\frac{1}{6}$; normal arrows denote transitions with probability
+$\frac{1}{6}$; medium arrows denote transitions with probability
 $\frac{1}{3}$; thick arrows denote transitions with probability
 $\frac{2}{3}$. For instance, the state $0$ can transit to the state
 $\underline{0}$ with probability $\frac{2}{3}$ while it can transit to
 the state $\underline{1}$ with probability $\frac{1}{6}$.
 
+Let us consider a data set whose two members (including John) contract
+the disease. Thus the number of individuals contracting the disease is
+$2$. From the state $2$, we see the mechanism answers
+\textit{zero}, \textit{one}, and \textit{two} with probabilities
+$\frac{1}{6}$, $\frac{1}{6}$, and $\frac{2}{3}$ respectively. 
+Suppose we replace John with an individual who does not contract
+the disease. The number of individuals contracting the disease for the
+new data set is $1$. From the state $1$, we see the mechanism answers
+\textit{zero}, \textit{one}, and \textit{two} with the probability
+$\frac{1}{3}$.
 
+If an attacker queries the number of individuals contracting the
+disease through the truncated $\frac{1}{2}$-geometric mechanism, 
+he will get the answer \textit{two} with probability at least
+$\frac{1}{3}$ regardless of John's record. The truncated
+$\frac{1}{2}$-geometric mechanism is known to be
+$\ln(2)$-differentially private. For any two similar data sets, the
+mechanism always have similar output distributions. Information
+revealed to attackers is therefore limited.
 
 \noindent
 \textit{Example 2.}
 Let us consider an attacker with prior knowledge about the data
 set. For instance, the attacker may know that contracting the disease
 is an independent event with probability $p$.
+
+A prior knowledge is an
+information state where the probabilities at the states $\underline{0}$,
+$\underline{1}$, and $\underline{2}$ are $0$. That is, the probability
+distribution on the states $0$, $1$, and $2$ is known \emph{a priori}.
 
 
 
