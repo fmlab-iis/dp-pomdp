@@ -1,0 +1,19 @@
+
+\begin{definition}
+  Let $\bbfS$ be a set of secrets, $\bbfS_{\textmd{pairs}}$ a set of
+  discriminative secret pairs, $\bbfD$ a set of data evolution
+  scenarios, and $\epsilon > 0$, a mechanism $\calM$ is
+  \emph{$\epsilon$-PufferFish ($\bbfS$, $\bbfS_{\textmd{pairs}}$,
+    $\bbfD$) private} if for all $r \in \textmd{range}(\calM)$, $(s_i, s_j) \in
+    \bbfS_{\textmd{pairs}}$, $\theta \in \bbfD$ with $\Pr (s_i |
+    \theta) \neq 0$ and $\Pr (s_j | \theta) \neq 0$, we have
+    \[
+      e^{-\epsilon} \Pr (\calM (\ox) = r | s_j, \theta) \leq
+      \Pr (\calM (\ox) = r | s_i, \theta) \leq
+      e^\epsilon \Pr (\calM (\ox) = r | s_j, \theta)
+    \]
+    where $\ox$ is a random variable with the distribution $\theta$.
+\end{definition}
+
+
+  

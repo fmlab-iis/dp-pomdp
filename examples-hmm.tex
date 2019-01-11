@@ -1,4 +1,24 @@
 
+Let us consider a simple data set with only two rows. Each row denotes
+whether an individual has a certain sensitive disease. Given such a
+data set, we wish to know how many individuals contract the disease in
+the data set.
+
+It is easy to see why the query may reveal sensitive information about
+individuals. For instance, suppose we know John's record is in the
+data set. We immediately infer that John has contracted the disease if
+the query answer is $2$. In fact, probabilistic inferences may reveal
+too much information in this case. If the query answer is $1$, we also
+know that John has $50\%$ of chance to have the disease. If the
+population has much lower rate of contracting the disease, John's
+privacy is undoubtedly intruded by our probabilistic inference.
+
+\noindent
+\textit{Example 1.}
+The $\frac{1}{2}$-geometric mechanism is known to be
+$\ln(2)$-differentially private. 
+
+
 \begin{figure}
   \centering
   \resizebox{.6\columnwidth}{!}{
@@ -87,3 +107,23 @@ $\frac{1}{3}$; thick arrows denote transitions with probability
 $\frac{2}{3}$. For instance, the state $0$ can transit to the state
 $\underline{0}$ with probability $\frac{2}{3}$ while it can transit to
 the state $\underline{1}$ with probability $\frac{1}{6}$.
+
+
+
+\noindent
+\textit{Example 2.}
+Let us consider an attacker with prior knowledge about the data
+set. For instance, the attacker may know that contracting the disease
+is an independent event with probability $p$.
+
+
+
+\noindent
+\textit{Example 3.}
+It is interesting to see when differential privacy may fail. Let us
+assume an omni-knowledgable attacker.
+
+
+
+\noindent
+\textit{Example 4.}
