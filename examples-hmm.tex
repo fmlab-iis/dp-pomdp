@@ -148,24 +148,38 @@ it may reveal too much information \emph{when the attacker has prior
 \noindent
 \textit{Example 3.}
 Let us analyze the scenario in the previous example with the
-pufferfish privacy framework.
+PufferFish privacy framework. Suppose the attacker knows that the data
+set contains two family members and the disease is contagious. We
+would like to compare the probabilities of observing \textit{zero}
+when a member has contracted the disease or not. If a family member
+has contracted the disease, the number of individuals contracting
+the disease must be $2$ by the prior knowledge. The attacker thus
+observes \textit{zero} with probability $\frac{1}{6}$.
+If, on the other hand, a family member has not contracted
+the disease, the number of individuals contracting the disease must be
+$0$ by the prior knowledge. The attacker observes \textit{zero}
+with probability $\frac{2}{3}$. The probabilities of observing
+\textit{zero} are $\frac{1}{6}$ and $\frac{2}{3}$ when a family
+has contracted the disease or not respectively. The
+$\frac{1}{2}$-geometric mechanism does not satisfy 
+$\ln(2)$-PufferFish privacy. 
 
 \noindent
 \textit{Example 4.}
-Let us consider an attacker with prior knowledge about the data
-set. For instance, the attacker may know that contracting the disease
-is an independent event with probability $p$. In this case, the
-attacker has the prior knowledge about the distribution of the true
-answers. Specifically, the number of individuals contracting the
+Prior knowledge does not necessarily lead to privacy leak. Consider a
+non-contagious disease. An attacker may know that contracting the
+disease is an independent event with probability $p$. Even though the
+attacker does not know how many individuals have disease exactly, the
+person can still infer that the number of individuals contracting the
 disease is $0$, $1$, and $2$ with probabilities $(1-p)^2$, $2p(1-p)$,
-and $p^2$ respectively. The prior knowledge can be easily specified by
-an information state in
-Figure~\ref{figure:geometric-mechanism}. Consider the information
+and $p^2$ respectively. The prior knowledge can be easily formalized
+by an information state in Figure~\ref{figure:geometric-mechanism}.
+Consider the information
 state where the probabilities at the states $0$, $1$, $2$,
 $\underline{0}$, $\underline{1}$, and $\underline{2}$ are $(1-p)^2$,
 $2p(1-p)$, $p^2$, $0$, $0$, and $0$ respectively.
 
-Using the pufferfish framework, we analyze the $\frac{1}{2}$-geometric
+Using the PufferFish framework, we analyze the $\frac{1}{2}$-geometric
 mechanism with the prior knowledge as follows. Assume the data set
 contains John's record and John has contracted the disease. We would
 like to compare probabilities of observations \textit{zero},
@@ -191,12 +205,12 @@ $\frac{p^2}{2p(1-p) + p^2} = \frac{p}{2-p}$, $0$, $0$, and $0$
 respectively. From this information state, the mechanism outputs
 \textit{zero}, \textit{one}, and \textit{two} with probabilities
 $\frac{4-3p}{12-6p}$, $\frac{4-3p}{12-6p}$, and $\frac{2}{6-3p}$
-respectively. Table~\ref{table:pufferfish-geometric-mechanism}
+respectively. Table~\ref{table:Pufferfish-geometric-mechanism}
 summarizes observation probabilities.
 
 \begin{table}
-  \caption{Pufferfish Anlysis of $\frac{1}{2}$-Geometric Mechanism}
-  \label{table:pufferfish-geometric-mechanism}
+  \caption{PufferFish Anlysis of $\frac{1}{2}$-Geometric Mechanism}
+  \label{table:Pufferfish-geometric-mechanism}
   \centering
   \[
     \begin{array}{c|ccc}
@@ -216,8 +230,12 @@ summarizes observation probabilities.
   \]
 \end{table}
 
-% explain why this is pufferfish private
+% explain why this is PufferFish private
 
+In~\cite{KM:14:PFMPD}, it is shown that differential privacy is
+subsumed by PufferFish privacy (Theorem~6.1). This example is an
+instance of the general theorem but formalized in hidden Markov
+models. 
 
 \noindent
 \textit{Example 5.}
