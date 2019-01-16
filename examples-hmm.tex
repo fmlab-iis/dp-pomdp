@@ -128,6 +128,30 @@ revealed to attackers is therefore limited.
 
 \noindent
 \textit{Example 2.}
+It is interesting to see when differential privacy may fail. Consider
+a data set consisting of two family members and a contagious
+disease. An attacker will immedidately infer the number of individuals
+contracting the disease can only be $0$ or $2$. If none has contracted
+the disease, the attacker observes \textit{zero}, \textit{one}, and
+\textit{two} with probabilities $\frac{2}{3}$, $\frac{1}{6}$, and
+$\frac{1}{6}$ respectively. If the two members have the disease, the
+probabilities are $\frac{1}{6}$, $\frac{1}{6}$, and $\frac{2}{3}$
+respectively. Note that it is $4 = \frac{2/3}{1/6}$ times more likely
+to observe \textit{zero} when there is none contracting the disease
+than there are two. Similarly, it is $4$ times more likely to observe
+\textit{two} in the other case. Even though the
+$\frac{1}{2}$-geometric mechanism is $\ln(2)$-differentially private,
+it may reveal too much information \emph{when the attacker has prior
+ knowledge about the data set and disease.}
+
+
+\noindent
+\textit{Example 3.}
+Let us analyze the scenario in the previous example with the
+pufferfish privacy framework.
+
+\noindent
+\textit{Example 4.}
 Let us consider an attacker with prior knowledge about the data
 set. For instance, the attacker may know that contracting the disease
 is an independent event with probability $p$. In this case, the
@@ -192,14 +216,10 @@ summarizes observation probabilities.
   \]
 \end{table}
 
+% explain why this is pufferfish private
 
 
 \noindent
-\textit{Example 3.}
-It is interesting to see when differential privacy may fail. Let us
+\textit{Example 5.}
+Let us
 assume an omni-knowledgable attacker.
-
-
-
-\noindent
-\textit{Example 4.}
