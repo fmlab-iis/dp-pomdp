@@ -28,3 +28,16 @@
 \newcommand{\myPr}[3]{{\Pr}^{#2}({#1}, {#3})}
 \newcommand{\dpriv}[2]{\mathcal{D}_{{#1}, {#2}}}
 \newcommand{\myE}[3]{\mathbb{E}_{#1}({#2}, {#3})}
+
+
+\algnewcommand\algorithmicmatch{\textbf{match}}
+\algnewcommand\algorithmicwith{\textbf{with}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+% New "environments"
+\algdef{SE}[MATCH]{Match}{EndMatch}[1]{\algorithmicmatch\ {#1}\ \algorithmicwith}{\algorithmicend\ \algorithmicmatch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ {#1}:}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndMatch}%
+\algtext*{EndCase}%
+\algnewcommand{\IfThenElse}[3]{% \IfThenElse{<if>}{<then>}{<else>}
+  \State \algorithmicif\ #1\ \algorithmicthen\ #2\ \algorithmicelse\ #3}
+\newcommand{\lCase}[2]{\State \textbf{case} {#1}{:} {#2}}
