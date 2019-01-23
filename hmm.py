@@ -107,3 +107,46 @@ if solver.check () == sat:
 else:
     print "pass"
     
+# privacy can still be preserved without independent contraction
+
+rate0 = Real ('rate0')
+rate1 = Real ('rate1')
+rate2 = Real ('rate2')
+
+p_all = Matrix ([[rate0, rate1, rate2]])
+
+r___ = p_all * TR
+r_all = [[r___[0].simplify (), r___[1].simplify (), r___[2].simplify ()]]
+
+print r_all
+# [[2*rate0/3 + rate1/3 + rate2/6,
+#   rate0/6 + rate1/3 + rate2/6,
+#   rate0/6 + rate1/3 + 2*rate2/3]]
+r_all_zero = 2*rate0/3 + rate1/3 + rate2/6
+r_all_one  = rate0/6 + rate1/3 + rate2/6
+r_all_two  = rate0/6 + rate1/3 + 2*rate2/3
+
+p_one = Matrix ([[0, rate1/(rate1 + rate2), rate2/(rate1 + rate2)]])
+r____ = p_one * TR
+r_one = [[r____[0].simplify (), r____[1].simplify (), r____[2].simplify ()]]
+
+print r_one
+# [[(rate1/3 + rate2/6)/(rate1 + rate2),
+#   (rate1/3 + rate2/6)/(rate1 + rate2),
+#   (rate1 + 2*rate2)/(3*(rate1 + rate2))]]
+r_one_zero = (rate1/3 + rate2/6)/(rate1 + rate2)
+r_one_one  = (rate1/3 + rate2/6)/(rate1 + rate2)
+r_one_two  = (rate1 + 2*rate2)/(3*(rate1 + rate2))
+
+solver = Solver ()
+solver.add (And (0 <= rate0, rate0 < 1))
+solver.add (And (0 <= rate1, rate1 < 1))
+solver.add (And (0 <= rate2, rate2 < 1))
+solver.add (rate0 + rate1 + rate2 == 1)
+
+solver.add (And (r_one_zero <= 2 * r_all_zero, r_all_zero <= 2 * r_one_zero))
+solver.add (And (r_one_one  <= 2 * r_all_one,  r_all_one  <= 2 * r_one_one))
+solver.add (And (r_one_two  <= 2 * r_all_two,  r_all_two  <= 2 * r_one_two))
+print solver.check ()
+print solver.model ()
+
