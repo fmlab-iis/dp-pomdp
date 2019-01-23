@@ -4,7 +4,7 @@
 from sympy.interactive.printing import init_printing
 init_printing()
 from sympy.matrices import Matrix
-from sympy import Rational
+from sympy import Rational, N
 from z3 import *
 
 TR = Matrix ([[Rational (2, 3), Rational (1, 6), Rational (1, 6)],
@@ -49,43 +49,61 @@ solver.push ()
 print r_ind[0][0] <= 2 * r_con[0][0]
 print r_con[0][0] <= 2 * r_ind[0][0]
 solver.add (Not (And (
-    rate**2/6 - 2*rate/3 + 2/3 <= (-3*rate + 4)/(3*(-rate + 2)),
-    (-3*rate + 4)/(6*(-rate + 2)) <= rate**2/3 - 4*rate/3 + 4/3)))
-print solver.check ()
-print solver.model ()
-"""
-rate=3/4
-print rate**2/6 - 2*rate/3 + 2/3 <= (-3*rate + 4)/(3*(-rate + 2))
-print (-3*rate + 4)/(6*(-rate + 2)) <= rate**2/3 - 4*rate/3 + 4/3
-"""
+    rate**2/6 - 2*rate/3 + RealVal(2)/3 <= (-3*rate + 4)/(3*(-rate + 2)),
+    (-3*rate + 4)/(6*(-rate + 2)) <= rate**2/3 - 4*rate/3 + RealVal(4)/3)))
+if solver.check () == sat:
+    print solver.model ()
+    print ((lambda rate: N(rate**2/6 - 2*rate/3 + 2./3))
+           (solver.model ()[rate])), ">",
+    print ((lambda rate: N((-3*rate + 4)/(3*(-rate + 2))))
+           (solver.model ()[rate]))
+    print "or"
+    print ((lambda rate: N((-3*rate + 4)/(6*(-rate + 2))))
+           (solver.model ()[rate])), ">",
+    print ((lambda rate: N(rate**2/3 - 4*rate/3 + 4./3))
+           (solver.model ()[rate]))
+else:
+    print "pass"
 
 solver.pop ()
 solver.push ()
 print r_ind[0][1] <= 2 * r_con[0][1]
 print r_con[0][1] <= 2 * r_ind[0][1]
 solver.add (Not (And (
-    -rate**2/3 + rate/3 + 1/6 <= (-3*rate + 4)/(3*(-rate + 2)),
-    (-3*rate + 4)/(6*(-rate + 2)) <= -2*rate**2/3 + 2*rate/3 + 1/3)))
-print solver.check ()
-print solver.model ()
-"""
-rate=1/2
-print -rate**2/3 + rate/3 + 1/6, (-3*rate + 4)/(3*(-rate + 2))
-print (-3*rate + 4)/(6*(-rate + 2)), -2*rate**2/3 + 2*rate/3 + 1/3
-"""
-
+    -rate**2/3 + rate/3 + RealVal(1)/6 <= (-3*rate + 4)/(3*(-rate + 2)),
+    (-3*rate + 4)/(6*(-rate + 2)) <= -2*rate**2/3 + 2*rate/3 + RealVal(1)/3)))
+if solver.check () == sat:
+    print solver.model ()
+    print ((lambda rate: N(-rate**2/3 + rate/3 + 1./6))
+           (solver.model ()[rate])), ">",
+    print ((lambda rate: N((-3*rate + 4)/(3*(-rate + 2))))
+           (solver.model ()[rate]))
+    print "or"
+    print ((lambda rate: N((-3*rate + 4)/(6*(-rate + 2))))
+           (solver.model ()[rate])), ">",
+    print ((lambda rate: N(-2*rate**2/3 + 2*rate/3 + 1./3))
+           (solver.model ()[rate]))
+else:
+    print "pass"
+    
 solver.pop ()
 solver.push ()
 print r_ind[0][2] <= 2 * r_con[0][2]
 print r_con[0][2] <= 2 * r_ind[0][2]
 solver.add (Not (And (
-    rate**2/6 + rate/3 + 1/6 <= 4/(3*(-rate + 2)),
-    2/(3*(-rate + 2)) <= rate**2/3 + 2*rate/3 + 1/3)))
-print solver.check ()
-print solver.model ()
-"""
-rate=1/2
-print rate**2/6 + rate/3 + 1/6, 4/(3*(-rate + 2))
-print 2/(3*(-rate + 2)), rate**2/3 + 2*rate/3 + 1/3
-"""
-
+    rate**2/6 + rate/3 + RealVal(1)/6 <= 4/(3*(-rate + 2)),
+    2/(3*(-rate + 2)) <= rate**2/3 + 2*rate/3 + RealVal(1)/3)))
+if solver.check () == sat:
+    print solver.model ()
+    print ((lambda rate: N (rate**2/6 + rate/3 + 1./6))
+           (solver.model ()[rate])), ">",
+    print ((lambda rate: N (4/(3*(-rate + 2))))
+           (solver.model ()[rate]))
+    print "or"
+    print ((lambda rate: N (2/(3*(-rate + 2))))
+           (solver.model ()[rate])), ">",
+    print ((lambda rate: N (rate**2/3 + 2*rate/3 + 1./3))
+           (solver.model ()[rate]))
+else:
+    print "pass"
+    
