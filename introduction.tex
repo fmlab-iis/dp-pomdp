@@ -26,11 +26,38 @@ subsequently attracts lots of attentions from academia and industry.
 
 % pufferfish privacy
 
+Pufferfish is a more recent privacy framework which subsumes
+differential privacy~\cite{KM:14:PFMPD}. In differential privacy,
+there cannot be correlation among entries in data sets. For data sets
+with correlated entries, differential privacy can still leak
+noticable private information~\cite{KM:11:NFLDP}. The no free lunch
+theorem in data privacy shows that prior knowledge about data sets is
+crucial to privacy analysis. The Pufferfish privacy framework allows
+data curators to analyze privacy with prior knowledge about data
+sets. Under the Bayesian privacy framework, it is shown that
+differential privacy preserves privacy if there is no correlation
+among entries in data sets (Theorem~2 in~\cite{KM:14:PFMPD}).
 
+% importance of formal methods in privacy
+
+Although privacy frameworks help data curators design data publishing
+mechanisms, they do not necessarily induce privacy-respecting
+mechanisms. In differential and Pufferfish privacy, data publishing
+mechanisms are analyzed with sophisticated mathematical tools. 
+Misinterpretation of privacy proofs can lead to incorrect
+modifications or generalizations of privacy-respecting mechanisms. 
+Indeed, several published variations of differentially private
+mechanisms are shown to voilate privacy~\cite{DWWZK:18:DVDP}. The
+formal method community has also started to develop techniques for
+checking differentially private
+mechanisms~\cite{TKD:11:FVDPIS,GHHNP:13:LDTDP,BDGKZ:13:VCDP}. 
 
 % markov models as formal models for privacy analysis
-
 % hidden markov models
+
+In this work, we focus on a lightweight technique for checking
+Pufferfish privacy. 
+
 
 % results
 
