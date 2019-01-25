@@ -56,13 +56,29 @@ mechanisms~\cite{TKD:11:FVDPIS,GHHNP:13:LDTDP,BDGKZ:13:VCDP}.
 % hidden markov models
 
 In this work, we focus on a lightweight but automatic technique for
-checking Pufferfish privacy. Our goal is to develop a universal
+checking Pufferfish privacy. Our goal is to develop a general
 verification technique for the Bayesian privacy framework. To do so,
 we propose a formal model for data publishing mechanisms and
 investigate the verification problem for Pufferfish privacy.
 In~\cite{LWZ:18:MCDPP}, the authors propose Markov chains and Markov
-decision processes to model data publishing mechanisms. 
+decision processes to model data publishing mechanisms. Several known
+mechanisms are formalized as different Markov models and checked to
+satisfy differential privacy.
 
+We propose to formalize Pufferfish privacy on hidden Markov models. A
+data publishing mechanism is again the underlying Markov 
+chain associated with a hidden Markov model. Attackers' prior
+knowledge is thus modeled by an initial state distribution. Based on
+our formalization, we give a formal model for the geometric mechanism
+and analyze it with Pufferfish privacy. Interestingly, hidden Markov
+models allow us to explain subtleties between differential privacy and
+Pufferfish privacy concisely. This strongly favors our formalization
+as the right abstraction for Pufferfish privacy. We believe data
+curators will be able to understand the Bayesian privacy framework
+through this work.
+
+We furthermore investigate the verification problem for Pufferfish
+privacy on hidden Markov models. 
 
 % results
 
