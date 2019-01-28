@@ -1,5 +1,16 @@
 
-
+Differential privacy is a privacy framework for design and analysis of
+data publishing mechanisms~\cite{D:06:DP,DR:14:AFDP}. In the
+framework, a \emph{data set} is an 
+ordered collection of \emph{data entries}. Two data sets $\od$ and
+$\od'$ are \emph{neighbors} (written $\Delta (\od, \od') \leq 1$) if
+$\od$ and $\od'$ are identical except for one data entry. A \emph{data
+publishing mechanism} (or simply \emph{mechanism}) $\calM$ is a
+randomized algorithm which takes a data set $\od$ as inputs. A
+mechanism satisfies $\epsilon$-differential privacy if its output
+distributions differ by the multiplicative factor $e^\epsilon$  at
+most on
+every neighboring data sets. 
 
 \begin{definition}
   Let $\epsilon > 0$. A mechanism $\calM$ is
@@ -11,6 +22,42 @@
   \]
 \end{definition}
 
+For any data entry $d$ in a data
+set $\od$, consider the data set $\od'$ obtained by removing $d$ from
+$\od$. Then $\Delta (\od, \od') \leq 1$. For any
+$\epsilon$-differentially private mechanism $\calM$, we have
+$e^{-\epsilon} \leq \Pr (\calM (\od') = r) \leq \Pr (\calM (\od) = r)
+\leq e^{\epsilon} \Pr (\calM (\od') = r)$ for every $r$. That is, the
+probabilities of observing $r$ are bounded by the multiplicative
+factor $e^{\epsilon}$ when the data entry $d$ is present or absent. 
+Intuitively, $\epsilon$-differential privacy ensures similar output
+distributions on similar data sets. Limited information about each
+data entry is revealed. Individual privacy is hence preserved.
+
+Differential privacy implicitly assumes each data entry is
+independent. For data sets with correlated data entries, differential
+privacy may reveal too much information about individuals. Consider,
+for instance, a data set of family members. If a family member has
+contracted a (very) contagious disease, all members are likely to have
+the same disease. In order to decide whether a specific family member
+has contracted the disease, it suffices to determine whether
+\emph{any} family member has the disease. It appears that global
+information can be inferred from any differential information
+when data entries are correlated. Differential privacy may be
+insufficient to preserve privacy~\cite{KM:11:NFLDP}.
+
+Pufferfish is a Bayesian privacy framework which subsumes differential
+privacy~\cite{KM:14:PFMPD}. In Pufferfish privacy, a random variable
+$\oD$ represents a data set drawn from a distribution $\theta \in
+\bbfD$. The set $\bbfD$ of distributions formalizes prior knowledge
+about data sets. Moreover, a set $\bbfS$ of \emph{secrets} and
+$\bbfS_{\textmd{pairs}} \subseteq \bbfS \times \bbfS$ a set of
+\emph{discriminative secret pairs} formalize the information to be
+protected. Consider a pair $(s_i, s_j)$ of discreminative secrets and
+a data set $\oD$ drawn from $\theta \in \bbfD$. A mechanism $\calM$
+satisfies $\epsilon$-Pufferfish privacy if its output distributions
+differ by at most the multiplicative factor $e^{\epsilon}$ when
+conditioned on the secrets $s_i$ and $s_j$.
 
 \begin{definition}
   Let $\bbfS$ be a set of secrets, $\bbfS_{\textmd{pairs}}$ a set of
@@ -28,5 +75,12 @@
     where $\oD$ is a random variable with the distribution $\theta$.
 \end{definition}
 
-
+In the definition, $\Pr (s_i | \theta) \neq 0$ and $\Pr (s_j | \theta)
+\neq 0$ ensure the probabilities $\Pr (\calM (\oD) = r | s_i, \theta)$
+and $\Pr (\calM (\oD) = r | s_j, \theta)$ are defined. 
+$\Pr (\calM (\oD) = r | s, \theta)$ is the probability of observing
+$r$ given the secret $s$ and a data set $\oD$ drawn from
+$\theta$. Informally, $\epsilon$-Pufferfish privacy ensures similar
+output distributions given discriminative secrets and data sets drawn
+from a distribution. 
   
