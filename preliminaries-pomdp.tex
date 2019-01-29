@@ -1,0 +1,143 @@
+A \emph{Markov decision process (MDP)} $M = (\Act, S, p, L)$ consists of
+a finite set $\Act$ of \emph{actions}, a set $S$ of \emph{states}, a
+\emph{labelling function} $L : S \rightarrow 2^{\AP}$, and 
+a \emph{transition distribution} $p : \Act \times S \times S
+\rightarrow \bbfRU$ such that $\sum_{t \in S} p (s, a, t) = 1$
+for every $a \in \Act$ and $s \in S$. If the set of states is finite,
+we say $M$ is a \emph{finite} MDP.
+
+A \emph{partially observable Markov decision process (POMDP)} $P =
+(M, \Obs, o)$ is a finite MDP $M = (\Act, S, p, L)$ with a finite set
+$\Obs$ of \emph{observations} and an \emph{observation distribution} $o
+: \Act  \times S \times \Obs \rightarrow \bbfRU$ such that $\sum_{\obs
+  \in \Obs} o (a, s, \obs) = 1$ for every $a \in \Act$ and $s \in S$.
+A POMDP models an MDP with incomplete information. The current state
+of the underlying MDP is not known precisely. Rather, schedules are
+made by observations and state distributions. 
+
+Formally, let $\Info (S) = \{ \info \in S \rightarrow \bbfRU : \sum_{s \in
+ S} \info (s) = 1 \}$ be the set of probability distributions on $S$. 
+Consider an \emph{initial state distribution} $\info_0 \in \Info (S)$. A
+\emph{history} $H_i$ up to time $i$ is a sequence $\info_0, a_1, \obs_1,
+a_2, \obs_2, \ldots, a_{i-1}, \obs_{i-1}$. At time $i$, $H_i$ is the
+only information available externally. If an action $a_i$ is chosen
+at time $i$ based on $H_i$, the following steps are carried out
+consecutively:
+\begin{enumerate}
+\item If the current state is $s_{i-1}$, the POMDP moves to the state
+  $s_i$ with probability $p (s_{i-1}, a_i, s_i)$;
+\item An observation $\obs_i$ is received with probability $o (a_i, s_i,
+  \obs_i)$; and
+\item The history $H_{i+1}$ becomes $H_i, a_i, \obs_i$.
+\end{enumerate}
+Note that histories do not contain states but the underlying MDP
+updates its state as usual. Based on this formalization, we can now
+define schedulers for POMDP. Let $\Xi$ be the set of histories. A
+\emph{scheduler} $\sch{S} : \Xi \rightarrow \Act$ for the POMDP $P
+= (M, \Obs, w)$ with $M = (\Act, S, p, L)$ is a function
+from histories to actions. 
+
+Interestingly, it is not necessary to keep
+histories. For schedulers, it suffices to maintain the current state
+distribution. Let $\info \in \Info (S)$ be a state distribution. Define
+$T (\info, a, \obs) \in \Info (S)$ by
+\begin{eqnarray}
+  \Pr(\obs | \info, a) & = &
+    \sum_{s, t \in S} \info (s) p (s, a, t) o (a, t, \obs)
+\label{eqn:state-distribution-observation}
+\\                             
+  T (\info, a, \obs) (t) & = &
+    \frac{\sum_{s \in S} \info (s) p (s, a, t) o (a, t, \obs)}
+         {\Pr (\obs | \info, a)}.
+\label{eqn:state-distribution-successor}
+\end{eqnarray}
+That is, $T (\info, a, \obs)$ is the posterior state distribution given
+the prior state distribution $\info$, action $a$, and observation
+$\obs$. Now recall that the initial state distribution $\info_0$ is
+known. Let $\info_{i-1} \in \Info (S)$ be the state distribution at
+time $i - 1$. Suppose a scheduler takes the action $a_{i}$ and
+observes $\obs_{i}$ at time $i$. Then $\info_i = T (\info_{i-1}, a_i,
+\obs_i)$ is the state distribution at time $i$. A
+scheduler can then decide the next action $a_{i+1}$ by $\info_i$
+accordingly. 
+
+Let $R (s, a)$ be the reward for the state $s$ on the action
+$a$, and $\overline{R} (s)$ be the reward for terminating at the state
+$s$.\footnote{Observe that $R (s, a)$ is received when the MDP
+\emph{leaves} $s$.} For $0 \leq \beta \leq 1$, the scheduler attaining
+the maximal expected reward
+\[
+  E[\beta^T \overline{R} (s_T) + \sum_{i=0}^{T-1} \beta^i R(s_i, a_{i+1})]
+\]
+can be obtained by iteration. Let $L_{< \infty} (\Info (S))$ be the set of
+bounded real-valued functions on $\Info (S)$. Consider
+$\Upsilon : \Info (S) \times \Act \times L_{< \infty} (\Info (S)) \rightarrow
+\bbfR$ defined by
+\[
+  \Upsilon (\info, a, f) = \sum_s \info (s) R (s, a) +
+  \beta \sum_{\obs \in \Obs}
+  \sum_{s, t \in S} \info (s) p (s, a, t) o (a, t, \obs) f (T (\info, a, \obs)).
+\]
+For $\info \in \Info (S)$, define
+\begin{eqnarray}
+  \overline{V}_{T} (\info) & = & \sum_s \info (s) \overline{R} (s)
+\label{eqn:terminate-probability}
+\\
+  \overline{V}_{i} (\info) & = &
+    \max_{a \in \Act} \{ \Upsilon (\info, a, \overline{V}_{i+1}) \} 
+    \hspace{2em} (0 \leq i < T)
+\label{eqn:max-probability}
+\end{eqnarray}
+
+It is more convenient to use matrices to simplify various
+expressions. Without loss of generality, assume $S = \{ 1, 2, \ldots,
+n \}$ when $|S| = n$. A state distribution $\info \in \Info (S)$ is
+represented by the column vector $(\info (1), \info (2), \ldots, \info
+(n))^T$  where $v^T$ is the transpose of the vector $v$.
+For $a \in \Act$, let $P^a = [p_{ij}^a]_{|S|
+  \times |S|}$ denote the transition matrix where $p_{ij}^a = p (i, a,
+j)$. For $a \in \Act, \obs \in \Obs$, let $O^a (\obs) = [
+o^a_{ij} ]_{|S| \times |S|}$ be the diagonal matrix where
+\begin{eqnarray*}
+  o^a_{ij} & = & \left\{
+                 \begin{array}{ll}
+                   o (a, i, \obs) & \textmd{ if } i = j\\
+                   0 & \textmd{ otherwise}
+                 \end{array}
+                 \right.
+\end{eqnarray*}
+Let $e$ be the $n$-column vector whose entries are $1$.
+Then $(\ref{eqn:state-distribution-observation})$ and
+$(\ref{eqn:state-distribution-successor})$ rewrite to
+\begin{eqnarray}
+  \Pr (\obs | \info, a) & = & \info^T P^a O^a (\obs) e \\
+  T (\info, a, \obs) & = & \frac{\info^T P^a O^a (\obs)}
+                                {\Pr (\obs | \info, a)}
+\end{eqnarray}
+Similarly, let $R^a = (R (a, 1), R (a, 2), \ldots, R (a, n))^T$ be the
+vector of rewards associated with the actcion
+$a$. Equations~$(\ref{eqn:terminate-probability})$ and 
+$(\ref{eqn:max-probability})$ rewrite to 
+\begin{eqnarray}
+  \overline{V}_{T} (\info) & = & \info^T \overline{R}\\
+  \overline{V}_i (\info) & = &
+        \max_{a \in \Act} \left\{ \info^T [
+        R^a + 
+        \beta \sum_{\obs \in \Obs}
+          P^a O^a (\obs) \overline{V}_{i+1} ] \right\}
+          \hspace{2em}(0 \leq i < T)
+\end{eqnarray}
+
+\hide{
+\begin{eqnarray*}
+  \overline{V}_{T} (\info) & = & \info^T \overline{R}\\
+  \overline{V}_i (\info) & = &
+        \max_{a \in \Act} \left\{ \info^T [
+        R^a + 
+        \beta \sum_{\obs \in \Obs} P^a O^a (\obs) \gamma^{l (\info, a,
+                               \obs, i + 1)} ] \right\}\\
+  l (\info, a, \obs, i) & = &
+      \max_{\gamma \in \Gamma_{i}}
+        \{ \info^T P^a O^a (\obs) \gamma \}
+\end{eqnarray*}
+}
