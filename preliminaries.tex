@@ -1,14 +1,47 @@
 
-A \emph{Markov Chain (MC)} $K = (S, p, L)$ consists of a set $S$ of
-\emph{states}, a \emph{labelling function} $L : S \rightarrow
-2^{\AP}$, and a \emph{transition distribution} $p : S \times S
+A \emph{Markov Chain (MC)} $K = (S, p)$ consists of a finite set $S$ of
+\emph{states} and a \emph{transition distribution} $p : S \times S
 \rightarrow \bbfRU$ such that $\sum_{t \in S} p (s, t) = 1$ for every
-$s \in S$. When the set $S$ of states is finite, we say $K$ is a
-\emph{finite} MC. 
-
-A \emph{Hidden Markov Model} $H = (K, \Obs, r)$ is a finite MC $K =
-(S, p, L)$ with a finite set $\Obs$ of \emph{observations} and an
+$s \in S$.
+A \emph{Hidden Markov Model (HMM)} $H = (K, \Obs)$ is a finite MC $K =
+(S, p)$ with a finite set $\Obs$ of \emph{observations} and an
 \emph{observation distribution} $o : S \times \Obs \rightarrow \bbfRU$
 such that $\sum_{\obs \in \Obs} o (s, \obs) = 1$ for every $\obs \in
-\Obs$. An HMM models a MC with incomplete information. 
+\Obs$. An HMM models a MC with incomplete information. Intuitively,
+the states of HMMs are not observable. External observers do not know
+the current state of an HMM. Instead, they have a state distribution
+$\pi : S \rightarrow [0, 1]$ with $\sum_{s \in S} \pi (s) = 1$
+to represent the likelihood of each state in HMMs.
 
+Let $H = ((S, p), \Obs)$ be an HMM and $\pi$ an initial state
+distribution. The HMM $H$ can be seen as a (randomized) generator for
+sequences of observations. The following procedure generate
+obersvation sequences of an arbitrary length:
+\begin{enumerate}
+\item $t \leftarrow 0$.
+\item Choose an initial state $s_0 \in S$ by the initial state
+  distribution $\pi$.
+\item \label{hmm:repeat}
+  Choose an observation $\omega_t$ by the observation distribution
+  $o (s_t, \bullet)$.
+\item Choose a next state $s_{t+1}$ by the transition distribution
+  $p (s_t, \bullet)$.
+\item $t \leftarrow t + 1$ and go to \ref{hmm:repeat}.
+\end{enumerate}
+
+Given an observation sequence $\overline{\omega} =
+\omega_0\omega_1\cdots\omega_k$ and a state sequence $\overline{s} =
+s_0s_1\cdots s_k$, it is not hard to compute the probability of
+observing $\overline{\omega}$ along $\overline{s}$ on an HMM $H = ((S,
+p), \Obs)$ with an initial state distribution $\pi$. Precisely,
+\begin{align*}
+  \Pr (\overline{\omega}, \overline{s} | H)
+  & = \Pr (\overline{\omega} | \overline{s}, H) \cdot \Pr (\overline{s}, H)\\
+  & = [o (s_0, \omega_0) \times \cdots
+    \times o (s_k, \omega_k)] \cdot
+      [\pi (s_0) \times p (s_0, s_1) \times \cdots
+    \times p (s_{k-1}, s_k)] \\
+  & = \pi (s_0) o (s_0, \omega_0) \times
+    p (s_0, s_1) o (s_1, \omega_1) \times \cdots \times
+    p (s_{k-1}, s_k) o (s_k, \omega_k).
+\end{align*}
