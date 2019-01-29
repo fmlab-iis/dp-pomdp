@@ -34,14 +34,39 @@ Given an observation sequence $\overline{\omega} =
 s_0s_1\cdots s_k$, it is not hard to compute the probability of
 observing $\overline{\omega}$ along $\overline{s}$ on an HMM $H = ((S,
 p), \Obs)$ with an initial state distribution $\pi$. Precisely,
-\begin{align*}
+\begin{align}
   \Pr (\overline{\omega}, \overline{s} | H)
-  & = \Pr (\overline{\omega} | \overline{s}, H) \cdot \Pr (\overline{s}, H)\\
-  & = [o (s_0, \omega_0) \times \cdots
-    \times o (s_k, \omega_k)] \cdot
-      [\pi (s_0) \times p (s_0, s_1) \times \cdots
-    \times p (s_{k-1}, s_k)] \\
-  & = \pi (s_0) o (s_0, \omega_0) \times
-    p (s_0, s_1) o (s_1, \omega_1) \times \cdots \times
+  & = \Pr (\overline{\omega} | \overline{s}, H) \times \Pr(\overline{s}, H)
+    \nonumber
+  \\
+  & = [o (s_0, \omega_0) \cdot \cdots \cdot
+    \times o (s_k, \omega_k)] \times
+      [\pi (s_0) \times p (s_0, s_1) \cdot \cdots
+    \cdot p (s_{k-1}, s_k)] 
+    \nonumber
+  \\
+  & = \pi (s_0) o (s_0, \omega_0) \cdot
+    p (s_0, s_1) o (s_1, \omega_1) \cdot \cdots \cdot
     p (s_{k-1}, s_k) o (s_k, \omega_k).
+    \label{eqn:prob-obs-state}
+\end{align}
+
+Since state sequences are not observable directly, we would like to
+compute in $\Pr (\overline{\omega} |
+H)$. Using~(\ref{eqn:prob-obs-state}), we have
+\[
+  \Pr (\overline{\omega} | H) = \sum_{\overline{s} \in S^{k+1}}
+  \Pr (\overline{\omega}, \overline{s} | H).
+\]
+But the summation has $|S|^{k+1}$ terms. An efficient method is to
+compute the probability $\alpha_t (s)$ for the partial observation
+sequence $\omega_0\omega_1\cdots\omega_t$ with the state $s$ at time
+$t$. Consider the following definition:
+\begin{align*}
+  \alpha_0 (s) &= \pi(s) o (s, \omega_0)\\
+  \alpha_{t+1} (s') &= \left[
+                      \sum_{s \in S} \alpha_t (s) p (s, s')
+                      \right]
+                      o (s', \omega_{t+1}).
 \end{align*}
+Then $\Pr (\overline{\omega} | H) = \sum_{s \in S} \alpha_k (s)$.
