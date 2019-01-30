@@ -1,10 +1,80 @@
 
+\begin{algorithm}
+  \begin{algorithmic}[1]
+    \Require{$H = ((S, p), \Obs, o)$ : an HMM; 
+      $\pi, \tau$ : state distributions on $S$; $c$ : a
+      non-negative real number; $k$ : a positive integer}
+    \Ensure{An SMT query $q$ such that $q$ is unsatisfiable iff
+      $\Pr (\overline{\omega} | \pi, H) \leq c \cdot
+       \Pr (\overline{\omega} | \tau, H)$ for every observation
+       sequences $\overline{\omega}$ of length $k$}
+     \Function{PufferfishCheck}{$H$, $\pi_0$, $\pi_1$, $c$, $k$}
+       \For{$s \in S$}
+         \State{$\alpha_0(s) \leftarrow
+           \textmd{\textsc{Product}} (\pi(s),
+           \textmd{\textsc{Select}}(\mathsf{w_0}, \Omega, o(s, \bullet)))$}
+         \State{$\beta_0(s) \leftarrow
+           \textmd{\textsc{Product}} (\tau(s),
+           \textmd{\textsc{Select}}(\mathsf{w_0}, \Omega, o(s, \bullet)))$}
+       \EndFor
+       \For{$t \leftarrow 1$ \textbf{to} $k - 1$}
+         \For{$s' \in S$}
+           \State{$\alpha_t(s') \leftarrow
+             \textmd{\textsc{Product}} (
+             \textmd{\textsc{Dot}} (\alpha_{t-1}, p (\bullet, s')),
+             \textmd{\textsc{Select}} (\mathsf{w_t}, \Omega, o(s', \bullet)))
+             $}
+           \State{$\beta_t(s') \leftarrow
+             \textmd{\textsc{Product}} (
+             \textmd{\textsc{Dot}} (\beta_{t-1}, p (\bullet, s')),
+             \textmd{\textsc{Select}} (\mathsf{w_t}, \Omega, o(s', \bullet)))
+             $}
+         \EndFor
+       \EndFor
+       \State{\Return{
+           $\textmd{\textsc{Gt}} (
+            \textmd{\textsc{Sum}} (\alpha_{k-1}),
+            \textmd{\textsc{Product}} (c,
+                                       \textmd{\textsc{Sum}} (\beta_{k-1}))
+           )$
+       }}
+     \EndFunction
+ \end{algorithmic}
+ \caption{Pufferfish Check}
+\end{algorithm}
+
+$\textmd{\textsc{Product}}(\mathit{smtExp}_0, \mathit{smtExp}_1,
+\ldots, \mathit{smtExp}_m)$
+returns the SMT expression denoting the product of
+$\mathit{smtExp}_0$, $\mathit{smtExp}_1, \ldots,$
+$\mathit{smtExp}_m$. Similarly, 
+$\textmd{\textsc{Sum}}(\mathit{smtExp}_0,$ $\mathit{smtExp}_1, \ldots,$
+$\mathit{smtExp}_m)$ returns the SMT expression denoting the summation
+of $\mathit{smtExp}_0$, $\mathit{smtExp}_1, \ldots,$
+$\mathit{smtExp}_m$. $\textmd{\textsc{Gt}} (\mathit{smtExp}_0,
+\mathit{smtExp}_1)$ returns the SMT expression for
+$\mathit{smtExp}_0$ greater than $\mathit{smtExp}_1$.
+
+$\textmd{\textsc{Select}} (\mathsf{w}, \{ \omega_1, \omega_2, \ldots,
+\omega_m\}, o (s, \bullet))$ 
+returns the SMT expression equal to $o (s, \omega)$ when the SMT
+variable $\mathsf{w}$ is $\omega$. It is easy to formulate by
+the SMT $\mathsf{ite}$ (if-then-else) expression as follows.
+\begin{align*}
+  \mathsf{ite} (\mathsf{w} = \omega_1, o (s, \omega_1),
+  \mathsf{ite} (\mathsf{w} = \omega_2, o (s, \omega_2),
+  \ldots
+  ,\mathsf{ite} (\mathsf{w} = \omega_m, o (s, \omega_m), \mathsf{w})
+  \ldots))
+\end{align*}
+
 % It is important to return indices. Otherwise, this is not DP.
 
 \begin{algorithm}
   \begin{algorithmic}[1]
     \Require{$0 \leq v_1, v_2, \ldots, v_n \leq 2$}
-    \Procedure{NoisyMax}{$v_1, v_2, \ldots, v_n$}
+    \Ensure{The index $r$ with the maximal $v_r$ among $v_1, v_2, \ldots, v_n$}
+    \Function{NoisyMax}{$v_1, v_2, \ldots, v_n$}
       \For{each $v_i$}
         \Match{$v_i$}
         \Comment{apply $\frac{1}{2}$-geometric mechanism to $v_i$}
@@ -22,7 +92,7 @@
       \State{find $1 \leq r \leq n$ such that
         $\tilde{v}_r \geq \tilde{v}_j$ for every $1 \leq j \leq n$}
       \State{\Return {$r$} }
-    \EndProcedure
+    \EndFunction
   \end{algorithmic}
   \caption{Noisy Max}
   \label{algorithm:noisy-max}
