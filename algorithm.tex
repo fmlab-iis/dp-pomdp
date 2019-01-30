@@ -55,6 +55,18 @@ $\mathit{smtExp}_m$. $\textmd{\textsc{Gt}} (\mathit{smtExp}_0,
 \mathit{smtExp}_1)$ returns the SMT expression for
 $\mathit{smtExp}_0$ greater than $\mathit{smtExp}_1$.
 
+$\textmd{\textsc{Dot}} ([\mathsf{a_0}, \mathsf{a_1}, \ldots,
+\mathsf{a_n}], [\mathsf{b_0}, \mathsf{b_1}, \ldots, \mathsf{b_n}])$
+returns the SMT expression for the inner product of the two lists of
+SMT expressions, namely,
+\[
+  \textmd{\textsc{Sum}} (
+  \textmd{\textsc{Product}}(\mathsf{a_0}, \mathsf{b_0}),
+  \textmd{\textsc{Product}}(\mathsf{a_1}, \mathsf{b_1}),
+  \ldots,
+  \textmd{\textsc{Product}}(\mathsf{a_n}, \mathsf{b_n})
+  ).
+\]
 $\textmd{\textsc{Select}} (\mathsf{w}, \{ \omega_1, \omega_2, \ldots,
 \omega_m\}, o (s, \bullet))$ 
 returns the SMT expression equal to $o (s, \omega)$ when the SMT
