@@ -1,4 +1,21 @@
 
+Noisy Max is a simple yet useful data publishing mechanism in
+differential privacy~\cite{DR:14:AFDP,DWWZK:18:DVDP}. Consider $n$
+queries of the same range, say, the number of patients for $n$
+different diseases in a hospital. We are interested in knowing which
+has the maximal value among the $n$ queries. A simple
+privacy-respecting way to release the information is to add
+independent noises to every query results and then return the index of
+the maximal noisy results.
+
+Algorithm~\ref{algorithm:noisy-max} shows an instance of Noisy Max by
+applying the $\frac{1}{2}$-geometric mechanism to each query with
+the discrete range $\{ 0, 1, 2 \}$. The algorithm first computes
+a noisy result $\tilde{v}_i$ for $v_i$ using the geometric
+mechanism. It then returns the index $r$ of the maximal
+$\tilde{v}_r$ among $\{ \tilde{v}_1, \tilde{v}_2, \ldots, \tilde{v}_n
+\}$. 
+ 
 % It is important to return indices. Otherwise, this is not DP.
 
 \begin{algorithm}
@@ -29,6 +46,23 @@
   \label{algorithm:noisy-max}
 \end{algorithm}
 
+To check Algorithm~\ref{algorithm:noisy-max}, consider the Markov
+chain in Figure~\ref{figure:hmm-noisy-max}. The possible values of
+$v_i$ are shown in a box on the top. The noisy values are the labels
+of the nodes at the bottom. In the figure, the node labeled
+$0\underline{2}1$ represents the noisy values $\tilde{v}_1 = 0$,
+$\tilde{v}_2 = 2$, and $\tilde{v}_3 = 1$. The underline denotes a
+maximal noisy value. For the node labeled $0\underline{2}1$, the index
+$2$ is returned (or observed) because $\tilde{v}_2$ has the maximal
+value among $\tilde{v}_1$, $\tilde{v}_2$, and $\tilde{v}_3$.
+
+Arrows again denotes probabilistic transitions. Recall that thick,
+medium, and thin arrows represent transitions with probabilities
+$\frac{2}{3}$, $\frac{1}{3}$, and $\frac{1}{6}$ respectively. When
+$(v_1, v_2, v_3) = (1, 1, 1)$, for instance, the probability of
+reaching $(\tilde{v}_1, \tilde{v}_2, \tilde{v}_3) = (0, 2, 1)$ is
+$\frac{1}{3} \times \frac{1}{3} \times \frac{2}{3}$.
+
 \begin{figure}
   \centering
     \resizebox{.95\columnwidth}{!}{
@@ -37,16 +71,19 @@
       \node[node] (v1_0) at (-3.0, 1) { $0$ };
       \node[node] (v1_1) at (-2.3, 1) { $1$ };
       \node[node] (v1_2) at (-1.6, 1) { $2$ };
+      \node at (-2.3, 1.55) { $v_1$ };
       \draw (-3.4, 1.4) rectangle (-1.2, .6);
 
       \node[node] (v2_0) at (-0.7, 1) { $0$ };
       \node[node] (v2_1) at (   0, 1) { $1$ };
       \node[node] (v2_2) at ( 0.7, 1) { $2$ };
+      \node at (-0, 1.55) { $v_3$ };
       \draw (-1.1, 1.4) rectangle ( 1.1, .6);
 
       \node[node] (v3_0) at ( 1.6, 1) { $0$ };
       \node[node] (v3_1) at ( 2.3, 1) { $1$ };
       \node[node] (v3_2) at ( 3.0, 1) { $2$ };
+      \node at (2.3, 1.55) { $v_3$ };
       \draw ( 1.2, 1.4) rectangle ( 3.4, .6);
 
 \hide{
