@@ -133,3 +133,15 @@ following theorem.
 \end{theorem}
 
 
+We have implemented our algorithm using \zpython. All examples in
+Section~\ref{section:hmm} are checked with our implementation. In
+\textit{Example~4}, contracting the disease is independent with
+probability $p > 0$. Even though the query contains non-linear
+constraints over real numbers, \zpython still proves that the
+$\frac{1}{2}$-geometric mechanism satisfies $\ln(2)$-Pufferfish
+privacy for any probability $0 < p < 1$. In \textit{Example~5}, it is
+assumed that the probability of $m$ individuals contracting the
+disease is $p_m > 0$ for $m = 0, 1, 2$. The probabilities $(p_0, p_1,
+p_2) = (\frac{1}{2}, \frac{1}{4}, \frac{1}{4})$ are in fact found by
+\zpython. The SMT solver is able to find a non-binomial initial state
+distribution to satisfy $\epsilon$-Pufferfish privacy. 
