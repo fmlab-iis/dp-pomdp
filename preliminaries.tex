@@ -61,12 +61,15 @@ H)$. Using~(\ref{eqn:prob-obs-state}), we have
 But the summation has $|S|^{k+1}$ terms. An efficient method is to
 compute the probability $\alpha_t (s)$ for the partial observation
 sequence $\omega_0\omega_1\cdots\omega_t$ with the state $s$ at time
-$t$. Consider the following definition:
-\begin{align*}
-  \alpha_0 (s) &= \pi(s) o (s, \omega_0)\\
+$t$~\cite{R:89:ATHMM}. Consider the following definition:
+\begin{align}
+  \alpha_0 (s) &= \pi(s) o (s, \omega_0)
+  \label{hmm:basis}
+  \\
   \alpha_{t+1} (s') &= \left[
                       \sum_{s \in S} \alpha_t (s) p (s, s')
                       \right]
                       o (s', \omega_{t+1}).
-\end{align*}
+  \label{hmm:inductive}
+\end{align}
 Then $\Pr (\overline{\omega} | H) = \sum_{s \in S} \alpha_k (s)$.
