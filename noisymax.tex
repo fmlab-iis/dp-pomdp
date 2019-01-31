@@ -48,77 +48,59 @@ $\tilde{v}_r$ among $\{ \tilde{v}_1, \tilde{v}_2, \ldots, \tilde{v}_n
 
 To check Algorithm~\ref{algorithm:noisy-max}, consider the Markov
 chain in Figure~\ref{figure:hmm-noisy-max}. The possible values of
-$v_i$ are shown in a box on the top. The noisy values are the labels
-of the nodes at the bottom. In the figure, the node labeled
-$0\underline{2}1$ represents the noisy values $\tilde{v}_1 = 0$,
+$v_i$ are shown on the top. In the figure, node labels denote the
+values of $v_1$, $v_2$, and $v_3$. For instance, the node labeled
+$011$ represents the inputs $(v_1, v_2, v_3) = (0, 1, 1)$. Similarly,
+the inputs $(v_1, v_2, v_3) = (1, 2, 0)$ and $(v_1, v_2, v_3) = (2, 0,
+2)$ are shown.
+The noisy values are the labels of the nodes at the bottom. 
+Hence the node labeled $0\underline{2}1$ represents the noisy values
+$\tilde{v}_1 = 0$, 
 $\tilde{v}_2 = 2$, and $\tilde{v}_3 = 1$. The underline denotes a
 maximal noisy value. For the node labeled $0\underline{2}1$, the index
 $2$ is returned (or observed) because $\tilde{v}_2$ has the maximal
 value among $\tilde{v}_1$, $\tilde{v}_2$, and $\tilde{v}_3$.
 
-Arrows again denotes probabilistic transitions. Recall that thick,
-medium, and thin arrows represent transitions with probabilities
-$\frac{2}{3}$, $\frac{1}{3}$, and $\frac{1}{6}$ respectively. When
-$(v_1, v_2, v_3) = (1, 1, 1)$, for instance, the probability of
-reaching $(\tilde{v}_1, \tilde{v}_2, \tilde{v}_3) = (0, 2, 1)$ is
-$\frac{1}{3} \times \frac{1}{3} \times \frac{2}{3}$.
+Arrows again denotes probabilistic transitions. Hence the probability
+of moving to $(\tilde{v}_1, \tilde{v}_2, \tilde{v}_3) = (0, 2, 1)$
+from $(v_1, v_2, v_3) = (0, 1, 1)$ is $\frac{2}{3} \cdot \frac{1}{3}
+\cdot \frac{2}{3}$ by the $\frac{1}{2}$-geometric
+mechanism. Similarly, the probability of obtaining the same noisy
+values from $(v_1, v_2, v_3) = (1, 2, 0)$ is $\frac{1}{3} \cdot
+\frac{2}{3} \cdot \frac{1}{3}$.
 
 \begin{figure}
   \centering
-    \resizebox{.95\columnwidth}{!}{
+    \resizebox{.8\columnwidth}{!}{
     \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
       distance=2cm,node/.style={circle,draw}]
-      \node[node] (v1_0) at (-3.0, 1) { $0$ };
-      \node[node] (v1_1) at (-2.3, 1) { $1$ };
-      \node[node] (v1_2) at (-1.6, 1) { $2$ };
-      \node at (-2.3, 1.55) { $v_1$ };
-      \draw (-3.4, 1.4) rectangle (-1.2, .6);
 
-      \node[node] (v2_0) at (-0.7, 1) { $0$ };
-      \node[node] (v2_1) at (   0, 1) { $1$ };
-      \node[node] (v2_2) at ( 0.7, 1) { $2$ };
-      \node at (-0, 1.55) { $v_3$ };
-      \draw (-1.1, 1.4) rectangle ( 1.1, .6);
-
-      \node[node] (v3_0) at ( 1.6, 1) { $0$ };
-      \node[node] (v3_1) at ( 2.3, 1) { $1$ };
-      \node[node] (v3_2) at ( 3.0, 1) { $2$ };
-      \node at (2.3, 1.55) { $v_3$ };
-      \draw ( 1.2, 1.4) rectangle ( 3.4, .6);
-
-\hide{
-      \node[node, scale=0.67] (000) at (-3.0, -1) { $\underline{0}00$ };
-
-      \node at (-1.5, -1) { $\cdots$ };
-
-      \node[node, scale=0.67] (011) at (   0, -1) { $0\underline{1}1$ };
-
-      \node at ( 1, -1) { $\cdots$ };
-
-      \node[node, scale=0.67] (102) at ( 2.0, -1) { $10\underline{2}$ };
-
-      \node at (2.8, -1) { $\cdots$ };
-    }
+      \node at (-2.3, 1) { $\cdots$ };
+      \node[node,scale=.67] (v011) at (-1.6, 1) { $011$ };
+      \node at ( -.8, 1) { $\cdots$ };
+      \node[node,scale=.67] (v120) at (   0, 1) { $120$ };
+      \node at ( 1.0, 1) { $\cdots$ };
+      \node[node,scale=.67] (v202) at ( 2.0, 1) { $202$ };
+      \node at ( 2.8, 1) { $\cdots$ };
 
       \node at (-1.5, -1) { $\cdots$ };
       \node[node, scale=0.67] (021) at (0, -1) { $0\underline{2}1$ };
       \node at ( 1.5, -1) { $\cdots$ };
     
       \path
-      (v1_0) edge [very thick] (021)
-      (v1_1) edge [semithick]  (021)
-      (v1_2) edge [ultra thin] (021)
+      (v011) edge [left,below] node [rotate=310]
+      { $\frac{2}{3} \cdot \frac{1}{3} \cdot \frac{2}{3}$ }
+      (021)
 
-      (v2_0) edge [ultra thin] (021)
-      (v2_1) edge [semithick]  (021)
-      (v2_2) edge [very thick] (021)
+      (v120) edge [right,above] node [rotate=270]
+      { $\frac{1}{3} \cdot \frac{2}{3} \cdot \frac{1}{3}$ }
+      (021)
 
-      (v3_0) edge [semithick]  (021)
-      (v3_1) edge [very thick] (021)
-      (v3_2) edge [semithick]  (021)
-      
+      (v202) edge [right,below] node [rotate=45]
+      { $\frac{1}{6} \cdot \frac{1}{6} \cdot \frac{1}{3}$ }
+      (021)
       ;
-      \end{tikzpicture}
+    \end{tikzpicture}
     }
   \caption{Hidden Markov Model for Noisy Max}
   \label{figure:hmm-noisy-max}
