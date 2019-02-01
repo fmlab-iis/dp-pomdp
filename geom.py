@@ -1,5 +1,5 @@
 # to execute: do
-# $ PYTHONPATH=<path to python Z3> python pufferfish.py
+# $ PYTHONPATH=<path to python Z3> python geom.py
 
 from z3 import *
 from pufferfish import observationCheck, pufferfishCheck
@@ -19,7 +19,7 @@ OB = [[rzero, rzero, rzero,  rone],    # default observation
       [rzero, rzero, rzero,  rone],    # default observation
       [ rone, rzero, rzero, rzero],    # observe 0
       [rzero,  rone, rzero, rzero],    # observe 1
-      [rzero, rzero,  rone, rzero]]   # observe 2
+      [rzero, rzero,  rone, rzero]]    # observe 2
 
 pi   = [[rone],  [rzero], [rzero], [rzero], [rzero], [rzero]]
 tau0 = [[rzero],  [rone], [rzero], [rzero], [rzero], [rzero]]
