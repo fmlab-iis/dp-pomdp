@@ -46,9 +46,9 @@ def make_TR (n_queries):
 
 def make_OB (n_queries):
     n_combs = 3 ** n_queries
-    ret = mx_make (2 * n_combs, 4, rzero)
+    ret = mx_make (2 * n_combs, n_queries + 1, rzero)
     for i in range (n_combs):
-        mx_set (ret, i, 3, rone)
+        mx_set (ret, i, n_queries, rone)
         v = decode (n_queries, i)
         idx = argmax (v)
         mx_set (ret, n_combs + i, idx, rone)
@@ -72,7 +72,7 @@ def make_prior_dp (n_queries):
                 mx_set (tau, encode (u), 0, rzero)
     return ret
 
-n_queries = 3
+n_queries = 5
 TR = make_TR (n_queries)
 OB = make_OB (n_queries)
 dp_pairs = make_prior_dp (n_queries)
