@@ -84,11 +84,14 @@ s.add (observations)
 s.push ()
 
 for (pi, tau) in dp_pairs:
-    print (pi, tau)
-    query = And (
-        Not (pufferfishCheck (TR, OB, pi, tau, RealVal ("4/3"), ws)),
-        Not (pufferfishCheck (TR, OB, tau, pi, RealVal ("4/3"), ws)))
+#    print (pi, tau)
+    query = Or (
+        pufferfishCheck (TR, OB, pi, tau, RealVal ("4/3"), ws),
+        pufferfishCheck (TR, OB, tau, pi, RealVal ("4/3"), ws))
     s.add (query)
-    print (s.check ())
+    result = s.check ()
+    print (result)
+    if result == sat:
+        print (s.model ())
     s.pop ()
-
+    s.push ()
