@@ -8,6 +8,15 @@ from pufferfish import observationCheck, pufferfishCheck
 rzero = RealVal (0)
 rone = RealVal (1)
 
+# (100/101)-geometric mechanism
+GEOM = [[RealVal("10201/20301"), RealVal("100/20301"), RealVal("10000/20301")],
+        [    RealVal("100/201"),     RealVal("1/201"),     RealVal("100/201")],
+        [RealVal("10000/20301"), RealVal("100/20301"), RealVal("10201/20301")]]
+
+# (9/10)-geometric mechanism
+GEOM = [[RealVal("100/190"), RealVal("9/190"),  RealVal("81/190")],
+        [   RealVal("9/19"),  RealVal("1/19"),    RealVal("9/19")],
+        [ RealVal("81/190"), RealVal("9/190"), RealVal("100/190")]]
 
 # (3/4)-geometric mechanism
 GEOM = [[RealVal("16/28"), RealVal("3/28"),  RealVal("9/28")],
