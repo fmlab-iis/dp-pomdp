@@ -1,115 +1,129 @@
-\begin{theorem}
-  The Pufferfish private problem in hidden Markov model is NP-hard.
-  That is, given a set of secrets $\bbfS$,
-  a set of discriminative secret pairs $\bbfS_{\textmd{pairs}}$, a set of data evolution
-  scenarios $\bbfD$ , and $\epsilon, \delta > 0$, one couldn't decide whether a mechanism $\calM$ is
-  $(\epsilon, \delta)$-Pufferfish ($\bbfS$, $\bbfS_{\textmd{pairs}}$
-    $\bbfD$) private in polynomial time.
-\end{theorem}
 
-\begin{proof}
-  In order to satisfy Pufferfish privacy in hidden Markov model, the probabilities of getting
-  an arbitrary observation sequence must be similar under every secret pair and distribution.
-  That is, for every observation sequence $O=o_1o_2\ldots$, secret pair $(s_i, s_j) \in
-    \bbfS_{\textmd{pairs}}$ and $\theta \in \bbfD$, the following inequations hold:
-  \[
-    \Pr (\calM (\oD) = O| s_i, \theta) \leq  e^\epsilon \Pr (\calM (\oD) = O| s_j, \theta) + \delta
-  \]
-  \[
-    \Pr (\calM (\oD) = O| s_j, \theta) \leq  e^\epsilon \Pr (\calM (\oD) = O| s_i, \theta) + \delta
-  \]
-  Equally,
+Actually, we formulate the above Pufferfish privacy cases into Hidden Markov Models.
+For instance, in \textit{Example 3}, the state space consists of ($0, 1, 2, \underline{0}, \underline{1}, \underline{2}$).
+The states $\underline{0}$, $\underline{1}$ and $\underline{2}$ emit, with certainty,
+observation $\textit{zero}$, $\textit{one}$ and $\textit{two}$ respectively.
+Even though the attacker has the prior knowledge that the disease is contagious,
+we want to make sure that he won't infer whether any member in the data set
+has contracted the disease or not. Thus the initial distribution pair the attacker gets would be
+($1,0,0,0,0,0$) and ($0,0,1,0,0,0$). And since the probabilities of observing
+$\textit{zero}$ are $\frac{2}{3}$ and $\frac{1}{6}$, this violates $\ln(2)$-Pufferfish privacy.
+
+To formalize, given a set of secrets $\bbfS$,
+a set of discriminative secret pairs $\bbfS_{\textmd{pairs}}$, a set of data evolution
+scenarios $\bbfD$ , and $\epsilon > 0$, we model the mechanism  $\calM$ into a Hidden Markov Chain
+and compute whether it's $\epsilon$-Pufferfish ($\bbfS$, $\bbfS_{\textmd{pairs}}$
+$\bbfD$) private. We use states and transitions to model the mechanism $\calM$,
+set certain target initial distribution pairs according to prior knowledge $\bbfD$ and discriminative secrets $\bbfS_{\textmd{pairs}}$,
+set target outputs as observations, and then check whether the probabilities under the same observation sequence
+are mathematical similar(i.e, $\epsilon$-Pufferfish private), for every distribution pair and every observation sequence.
+Therefore, our task turns into finding the observation sequence that makes the observing probabilities differ the most;
+that is, in Pufferfish framework, for every observation sequence $O=o_1o_2\ldots$, secret pair $(s_i, s_j) \in
+\bbfS_{\textmd{pairs}}$ and $\theta \in \bbfD$
   \begin{equation}\label{max1}
      \max_{O,(s_i, s_j) \in
     \bbfS_{\textmd{pairs}},\theta \in \bbfD}
-    { \Pr (\calM (\oD) = O| s_i, \theta) - e^\epsilon \Pr (\calM (\oD) = O| s_j, \theta) }\leq   \delta
+    { \Pr (\calM (\oD) = O| s_i, \theta) - e^\epsilon \Pr (\calM (\oD) = O| s_j, \theta) }
   \end{equation}
+
   \begin{equation}\label{max2}
      \max_{O,(s_i, s_j) \in
     \bbfS_{\textmd{pairs}},\theta \in \bbfD}
-     { \Pr (\calM (\oD) = O| s_j, \theta) - e^\epsilon \Pr (\calM (\oD) = O| s_i, \theta) }\leq   \delta
+     { \Pr (\calM (\oD) = O| s_j, \theta) - e^\epsilon \Pr (\calM (\oD) = O| s_i, \theta) }
   \end{equation}
+are less than or equal to 0.
 
-  We need to find one specific observation sequence $O$, secret pair $(s_i, s_j)$ and distribution $\theta$
-  to maximize the difference and compare it with $\delta$.
-  However, we will show the problem to find this maximal value is NP-hard.
+However, as we will show below, the problem is NP-hard.
+
+\begin{theorem}
+  The Pufferfish privacy problem in Hidden Markov Model is NP-hard.
+\end{theorem}
+
+\begin{proof}
+  In order to satisfy Pufferfish privacy in hidden Markov model, we have to decide whether
+  the maximum value of (\ref{max1}) (\ref{max2}) is less than or equal to $0$.
+  Let's just simplify the problem by only having one initial distribution pair to compare
+  so that we only need to find the observation sequence.
+  We will show this simplified version to find this maximum value is still NP-hard.
   To show NP-hardness, we reduce SAT to this problem. Assume we have a formula $F(x_1,\ldots,x_n)$ in conjuncted normal form,
   with $n(n>=3)$ variables and $m$ clauses, $C_1,\ldots,C_m$. We shall construct a hidden Markov model $H = (K, \Obs, o)$
-  such that the difference of the left part of inequations \ref{max1} and \ref{max2}
-  will take the maximum value
-   if and only if the formula $F(x_1,\ldots,x_n)$ is satisfiable.
+  such that(\ref{max1})and (\ref{max2}) will take the maximum value $0$
+  if and only if the formula $F(x_1,\ldots,x_n)$ is satisfiable.
 
-  The construction is similar in \cite{}. We first describe the Markov Chain $K =
-  (S, p, L)$. $S$ contains a state group $A$ with six states $A_{ij},A'_{ij},T_{A ij},T'_{Aij},F_{Aij},F'_{Aij}$ and
+  \textit{Construction.} The construction is similar in \cite{PCT:87:CMDP}. We first describe the Markov Chain $K =
+  (S, p)$. $S$ contains a state group $A$ with six states $A_{ij},A'_{ij},T_{A ij},T'_{Aij},F_{Aij},F'_{Aij}$ and
   a state group $B$ with six states $B_{ij},B'_{ij},T_{Bij},T'_{Bij},F_{Bij},F'_{Bij}$
   for each clause $C_i$ and variable $x_j$. Besides, there are $4m$ states $A_{i,n+1},A'_{i,n+1},B_{i,n+1},B'_{i,n+1}$.
-  The transition distribution $p$ is as followed. For group $A$, there are two transitions with equal probability 0.5 leading from
-  state $A_{ij}$ to $T_{Aij}$ and $F_{Aij}$ respectively; similarly there are two transitions leading with equal probability 0.5
+  The transition distribution $p$ is as followed. For group $A$, there are two transitions with same probability $\frac{1}{2}$ leading from
+  state $A_{ij}$ to $T_{Aij}$ and $F_{Aij}$ respectively; similarly there are two transitions leading with probability $\frac{1}{2}$
   from $A'_{ij}$ to $T'_{Aij}$ and $F'_{Aij}$. There's only one transition leading with certainty from $T_{Aij},F_{Aij},T'_{Aij},F'_{Aij}$,
   to $A_{i,j+1},A_{i,j+1},A'_{i,j+1},A'_{i,j+1}$ respectively with two exceptions: If $x_j$ appears positively in $C_i$,
   the transition from $T'_{Aij}$ is to $A_{i,j+1}$ instead of $A'_{i,j+1}$; and if $x_j$ appears negatively, the transition from
   $F'_{Aij}$ is to $A_{i,j+1}$. For the state group $B$, all the transitions imitate that in group $A$ only with different state names.
-  For instance, there are two transitions leading with equal probability 0.5 from state $B_{ij}$ to $T_{Bij}$ and $F_{Bij}$ and so on.
-  We just skip the labeling function since it is not involved here.
+  For instance, there are two transitions leading with same probability $\frac{1}{2}$ from state $B_{ij}$ to $T_{Bij}$ and $F_{Bij}$ and so on.
 
   Next we describe the observations $\Obs$ and the observation distribution. In state
   $A_{ij},A'_{ij},B_{ij},B'_{ij}$ with $1\leq j \leq n$, one can observe $X_j \in \Obs$ with certainty.
   In state $T_{Aij},T'_{Aij},T_{Bij},T'_{Bij}$ with $1\leq j \leq n$, one can only observe $T_j \in \Obs$;
   similarly, the sole observation $F_j \in \Obs$ can be observed in state $F_{Aij},F'_{Aij},F_{Bij},F'_{Bij}$ with $1\leq j \leq n$.
-  In state $A_{i,n+1}$, only $\top \in \Obs$ can be observed while in state $B_{i,n+1},B'_{i,n+1}$ only
-  $\bot \in \Obs$ can be observed. In state $A'_{i,n+1}$, there's a equal probability 0.5 observe $\top$ or $\bot$.
+  In state $A_{i,n+1}$, we have probability $\frac{4}{5}$ to observe $\top \in \Obs$ and $\frac{1}{5}$  to observe $\bot \in \Obs$;
+  while in state $B_{i,n+1}$, we have probability $\frac{1}{5}$ to observe $\top$ and $\frac{4}{5}$  to observe $\bot \in \Obs$.
+  In state $A'_{i,n+1}$ and $B'_{i,n+1}$, there are equal probabilities of $\frac{1}{2}$ observing $\top$ and $\bot$.
 
-  Then we describe the Pufferfish privacy scenario in this hidden Markov model. Assume we only have one secret pair
-  $(s_1, s_2)\in \bbfS_{\textmd{pairs}}$, and one distribution $\theta \in \bbfD$. The effect of knowing $s_1$ and $\theta$
-  is that we know a initial distribution $\oD_1$ among the states, where
-  there's a uniform probability, i.e, $\frac{1}{m}$ to start from each member in the state set $\{A'_{i1}\}$ with $1 \leq i \leq m$ .
-  Similarly, when knowing $s_2$ and $\theta$ we get a new distribution $\oD_2$, where
-  the probability starting from each member in the state set $\{B'_{i1}\}$ is also $\frac{1}{m}$ with $1 \leq i \leq m$.
+  Then we describe the Pufferfish privacy scenario in this Hidden Markov Model. Assume that according to
+  prior knowledge $\bbfD$ and discriminative secrets $\bbfS_{\textmd{pairs}}$, we only have
+  two initial distributions $\oD_1$ and $\oD_2$ to compare. $\oD_1$ induces a uniform distribution,
+  to start from each member in the state set $\{A'_{i1}\}$ with $1 \leq i \leq m$, whose probability is $\frac{1}{m}$.
+  Similarly, in $\oD_2$, the probability starting from each member in the state set $\{B'_{i1}\}$ is also $\frac{1}{m}$ with $1 \leq i \leq m$.
 
-  Let $\epsilon=0$. The intuition is that starting from state $A'_{i1}$ or $B'_{i1}$,
-  the clause $C_i$ is chosen and then the assignment of variables will be considered one by one
+  \textit{Reduction.} The intuition is that starting from state $A'_{i1}$ or $B'_{i1}$,
+  the clause $C_i$ is chosen and then the assignment of each variable will be considered one by one
   in this clause. Once the assignment of a variable $x_j$ makes $C_i$ satisfied, immediately
   state $A_{i,j+1}$ or $B_{i,j+1}$ is reached. So at last if state $A'_{i,n+1}$ or $B'_{i,n+1}$
-  is reached, it means that the clause $C_i$ is not satisfied under this assignment. Now, we claim
-  that  $\Pr (\calM (\oD_1) = O) - \Pr (\calM (\oD_2) = O)$ takes the maximum value $2^{-n}$
+  is reached, it means that the clause $C_i$ is not satisfied under this assignment. Now, we take $\epsilon = \ln 4$
+  and claim that  $\Pr (\calM (\oD_1) = O) - 4 \times \Pr (\calM (\oD_2) = O)$ takes the maximum value $0$
   if and only if $O$ is the observation sequence $X_1A_1X_2\ldots A_n \top$ such that
   formula $F(x_1,\ldots,x_n)$ is satisfied under assignment $A_i \in \{T_i,F_i\}$ for each variable $x_i$
-  (Similar analysis applies for $\Pr (\calM (\oD_2) = O) - \Pr (\calM (\oD_1) = O)$ except that it takes the
-   maximum value $2^{-n}$ when the assignment satisfies the formula $F(x_1,\ldots,x_n)$ but with $\bot$
-   as the last observation).
+  (Similar analysis applies for $\Pr (\calM (\oD_2) = O) - 4 \times \Pr (\calM (\oD_1) = O)$ except that it takes the
+   maximum value $0$ with $\bot$ as the last observation).
 
-  We first argue that $2^{-n}$ is the maximum value.
+  We argue that $0$ is the maximum value.
   It's easy to see that if we take an arbitrary observation sequence $O = X_1A_1X_2\ldots $,
-  as long as $\top$ or $\bot$ hasn't been observed, $\Pr (\calM (\oD_1) = O) - \Pr (\calM (\oD_2) = O) = 0$.
+  as long as $\top$ or $\bot$ hasn't been observed, $\Pr (\calM (\oD_1) = O) -  4 \times \Pr (\calM (\oD_2) = O) < 0$.
   That's because the state group $B$ just imitate the state group $A$ before reaching the state
-  $B_{i,n+1}$ and $B'_{i,n+1}$. Thus the maximum value must be 0 or be obtained after we observe $\top$
-  or $\bot$. 
-  
-  We consider $O=X_1A_1X_2\ldots A_n \top$. Note that the assignment of each variable $A_j$
-  determines for each clause $C_i$ whether $A_{i,n+1}$ is reached or $A'_{i,n+1}$ otherwise under
-  distribution $\oD_1$; similarly it determines whether $B_{i,n+1}$ is reached or $B'_{i,n+1}$ otherwise under
-  distribution $\oD_2$. When observing $O=X_1A_1X_2\ldots A_n \top$, if $C_i$ is satisfied, we start from $A'_{i1}$ with a 
-  uniform probability $\frac{1}{m}$, finally reach $A_{i,n+1}$ and with probability $2^{-n} \times \frac{1}{m}$ observe $O$;
-  similarly if $C_i$ is not satisfied, we finally reach $A'_{i,n+1}$ and with probability $2^{-n-1}\times \frac{1}{m}$ observe $O$.
-  Therefore, if we choose a observation sequence such that all the 
-  clauses are satisfied, $\Pr (\calM (\oD_1) = O)$ will take the maximum value $2^{-n}$. 
-  Meanwhile $\Pr (\calM (\oD_2) = O)=0$ since $\top$ can't be observed from state $B_{i,n+1}$ and $B'_{i,n+1}$.
-  
-  If we consider $O=X_1A_1X_2\ldots A_n \bot$, only in state $A'_{i,n+1}$ can we observe $O$ with
-  probability $2^{-n-1} \times \frac{1}{m}$. If state $A_{i,n+1}$ is reached, we can observe $O$ with probability 0.
-  Thus $\Pr (\calM (\oD_1) = O) - \Pr (\calM (\oD_2) = O) \leq 2^{-n-1} < 2^{-n}$. This indicates that
-  the maximum value of $\Pr (\calM (\oD_1) = O) - \Pr (\calM (\oD_2) = O)$ is $2^{-n}$.
-  
-  Finally we prove that  $\Pr (\calM (\oD_1) = O) - \Pr (\calM (\oD_2) = O)$ takes value $2^{-n}$
+  $B_{i,n+1}$ and $B'_{i,n+1}$. Thus the maximum value must be less than 0 or be obtained after we observe $\top$
+  or $\bot$.
+
+  Then we consider $O=X_1A_1X_2\ldots A_n \top$. Note that if $C_i$ is satisfied under observation $O$, we start from $A'_{i1}$ and $B'_{i1}$ both with
+  probability $\frac{1}{m}$, finally reaching $A_{i,n+1}$ and $B_{i,n+1}$ with probabilities $2^{-n} \times \frac{1}{m} \times \frac{4}{5}$
+  and $2^{-n} \times \frac{1}{m} \times \frac{1}{5}$ respectively;
+  if $C_i$ is not satisfied, we finally reach $A'_{i,n+1}$ and $B'_{i,n+1}$  with equal probabilities of $2^{-n}\times \frac{1}{m} \times \frac{1}{2}$ .
+  Thus a satisfied clause will contribute $2^{-n} \times \frac{1}{m} \times \frac{4}{5} - 4 \times 2^{-n} \times \frac{1}{m} \times \frac{1}{5} = 0$ to
+  the result; While if some clause is not satisfied, $\Pr (\calM (\oD_1) = O)- 4\times \Pr (\calM (\oD_2) = O)$ is strictly less than $0$.
+  Therefore, if we choose a observation sequence ended with $\top$ such that all the
+  clauses are satisfied, $\Pr (\calM (\oD_1) = O)- 4\times \Pr (\calM (\oD_2) = O)$ will take the maximum value 0.
+  If we consider $O=X_1A_1X_2\ldots A_n \bot$, similar analysis concludes that $\Pr (\calM (\oD_1) = O) - 4 \times \Pr (\calM (\oD_2) = O)$
+  will be strictly less than $0$.
+  This indicates that the maximum value of $\Pr (\calM (\oD_1) = O) - 4 \times \Pr (\calM (\oD_2) = O)$ is $0$.
+
+  Finally from the process above,
+  $\Pr (\calM (\oD_1) = O) - 4 \times \Pr (\calM (\oD_2) = O)$ takes the maximum value $0$
   if and only if $O$ is the observation sequence $X_1A_1X_2\ldots A_n \top$ such that
-  formula $F(x_1,\ldots,x_n)$ is satisfied under assignment $A_i \in \{T_i,F_i\}$ for each variable $x_i$.
+  formula $F(x_1,\ldots,x_n)$ is satisfied under assignment $A_i \in \{T_i,F_i\}$ for each variable $x_i$,
+  which means that $F(x_1,\ldots,x_n)$ is satisfiable.
+  We can also infer that if $\epsilon$ is slightly smaller than $\ln 4$, the maximum value of
+  $\Pr (\calM (\oD_1) = O) - e ^\epsilon \times \Pr (\calM (\oD_2) = O)$ will be more than $0$,
+  therefore $\epsilon-$Pufferfish privacy is not satisfied.
+  This indicates that the general problem for $\epsilon-$Pufferfish privacy is NP-hard.
+
+ \iffalse
   The "if" direction can be immediately proved from the process of finding the maximum.
   For the "only if" direction, with proof by contradiction, assume that $\Pr (\calM (\oD_1) = O) - \Pr (\calM (\oD_2) = O)$ takes
-  value $2^{-n}$ but $O$ doesn't satisfy above condition. With the analysis before, the observation must be in the form 
+  value $2^{-n}$ but $O$ doesn't satisfy above condition. With the analysis before, the observation must be in the form
   of $O=X_1A_1X_2\ldots A_n \top$, where the assignment implied by $O$ doesn't satisfy $F(x_1,\ldots,x_n)$.
   So some clause $C_i$ is not satisfied and starting from $A'_{ij}$ the probability of
-  observe $O$ is $2^{-n-1}\times \frac{1}{m}$. Therefore the sum of all the clauses observing 
-  $O$ is smaller than $2^{-n}$ since a clause which is satisfied only has a distribution 
+  observe $O$ is $2^{-n-1}\times \frac{1}{m}$. Therefore the sum of all the clauses observing
+  $O$ is smaller than $2^{-n}$ since a clause which is satisfied only has a distribution
   of  $2^{-n}\times \frac{1}{m}$ observing $O$. That's a contradiction.
-  
+ \fi
 \end{proof} 
