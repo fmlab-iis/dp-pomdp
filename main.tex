@@ -23,7 +23,15 @@
 \maketitle
 
 \begin{abstract}
-  Use POMDP to formalize privacy
+Pufferfish is a Bayesian privacy framework for evaluating
+privacy preservation, allowing for attackers with some prior knowledge
+on the protected data. It subsumes differential privacy, which is an ongoing hot 
+topic in security. However, many arising private mechanisms can't achieve
+the effect they claim and it's difficult to verify that. In this paper, we propose an automatic verification technique
+for Pufferfish privacy problems. We use hidden Markov models to model privacy scenarios
+and prove that the Pufferfish privacy problems in HMMs are NP-hard.
+Though, with the help of SMT solver, an automatic algorithm is designed
+and turns out to efficiently verify classic privacy problems.
 \end{abstract}
 
 \section{Introduction}
@@ -42,7 +50,7 @@
 \label{section:hmm}
 \input{examples-hmm}
 
-\section{Complexity of Pufferfish Privacy}
+\section{Complexity of Pufferfish Privacy in HMMs}
 \label{section:complexity}
 \input{proof}
 
@@ -53,6 +61,10 @@
 \section{Case Study: Noisy Max}
 \label{section:noisy-max}
 \input{noisymax}
+
+\section{Conclusion}
+\label{section:conclusion}
+\input{conclusion}
 
 \bibliographystyle{splncs03}
 \bibliography{refs}

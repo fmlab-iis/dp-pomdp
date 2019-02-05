@@ -106,44 +106,45 @@ values from $(v_1, v_2, v_3) = (1, 2, 0)$ is $\frac{1}{3} \cdot
   \label{figure:hmm-noisy-max}
 \end{figure}
 
-In the literature of differential privacy ~\cite{DR:14:AFDP,DWWZK:18:DVDP},
-Noisy Max is proved to efficiently protect privacy for neighbor data sets. For instance, the input
+In the literature of differential privacy~\cite{DR:14:AFDP,DWWZK:18:DVDP},
+Noisy Max is proved to efficiently protect privacy for neighboring data sets. For instance, the input
 nodes at the top of Figure \ref{figure:hmm-noisy-max} labeled $011$ and $021$ are neighbors
-so that they have similar probabilities of leading to same observations. What's more,
-in the Hidden Markov Model, we can compute that when the attacker gets some prior information
-about the database distribution, whether privacy is still protected. The attacker may know
+so that they have similar probabilities of having same observations. What's more,
+in the hidden Markov model, we can compute if some attacker has prior information
+about the database distribution, whether privacy is still preserved. The attacker may know
 a range of things in prior, such as the probability $p$ of contracting some disease $A$,
-some strongly infectious disease $B$ which may infect the whole family, some of the members in the
+some strongly infectious disease $B$ which may infect the whole family, some members in the
 data set who are strongly correlated, etc.
 
 \textit{Example 7.1} We describe a classic scenario of applying Noisy Max. Assume that there
 are $3$ diseases $\{A,B,C\}$ and $2$ members ${John, Alice}$ in the data set. People can observe which disease
-infects the most people, after applying the Noisy Max algorithm to the results to protect privacy. 
-If more than one disease
-infects the most people, the smallest index will be observed.
+infects the most people. 
+In order to protect privacy, Noisy Max algorithm is applied to the results.
+We can also set some rule that if more than one disease infects the most people, the smallest index will be observed.
 There's one attacker who has some prior knowledge about some of the diseases and members in the data set:
 For disease $A$, usually people will contract the disease with probability $p_1$;
 For disease $B$, it is highly contagious so that the family members John and Alice will contract
 it at the same time with probability $p_2$ or neither will contract it;
 The attacker doesn't have any information about disease $C$. Now we want to figure out,
-is there much difference in observations between John contracts disease $C$ and John doesn't?
-That is, we want to know whether this model satisfies Pufferfish Privacy.
+is there much difference in observations between John contracts disease $C$ and John doesn't with those prior knowledge?
+That is, we want to know whether this model satisfies some $\epsilon$-Pufferfish privacy.
 
 We simulate this scenario in our model.
-The Hidden Markov Model is just the same as in Figure \ref{figure:hmm-noisy-max}, except that
+The hidden Markov model is just the same as in Figure \ref{figure:hmm-noisy-max}, except that
 this time there are initial distributions among states caused by the attacker's prior knowledge.
-We use $\pi$ and $\tau$ to represent the distributions when John contracts $C$ and not. 
+We use $\pi$ and $\tau$ to represent the distributions when John contracts $C$ and not.
 We can compute under $\pi$ and $\tau$ the probability starting from every node labeled $(i,j,k)$ at the top of Figure \ref{figure:hmm-noisy-max},
 where $i$ persons contract $A$, $j$ persons contract $B$ and $k$ persons contract $C$.
 For instance, $\pi (0,2,1) = (1-p_1)^2 p_2 \times \frac{1}{2}$. Here the reason for the $\frac{1}{2}$
-is that the attacker only assumes that John contracts $C$ and thus $k$ could only be $1$ or $2$. So a uniform
+is that we only assume that John contracts $C$ and thus $k$ could only be $1$ or $2$. Without other information
+about disease $C$, a uniform
 distribution on $k$ among $\{1,2\}$ is taken. More starting probability could be computed by using the
 tables below.
 
 \begin{minipage}{\textwidth}
-\begin{minipage}[t]{0.43\textwidth} 
+\begin{minipage}[t]{0.4\textwidth}
  \centering
-  \makeatletter\def\@captype{table}\makeatother\caption{Probabilities for node labeled $(i,j,k)$ under distribution $\pi$ }
+  \makeatletter\def\@captype{table}\makeatother\caption{Probabilities for node labeled $(i,j,k)$ under $\pi$ }
   \label{table:pi}
    \begin{tabular}{c|ccc}
 & 0 & 1 & 2 \\
@@ -164,9 +165,13 @@ tables below.
       & $\frac{1}{2}$
 \end{tabular}
 \end{minipage}
-\begin{minipage}[t]{0.43\textwidth}
+\begin{minipage}[t]{0.2\textwidth}
 \centering
-  \makeatletter\def\@captype{table}\makeatother\caption{Probabilities for node labeled $(i,j,k)$ under distribution $\tau$ }
+\space
+\end{minipage}
+\begin{minipage}[t]{0.4\textwidth}
+\centering
+  \makeatletter\def\@captype{table}\makeatother\caption{Probabilities for node labeled $(i,j,k)$ under $\tau$ }
   \label{table:tau}
 
    \begin{tabular}{c|ccc}
@@ -190,19 +195,22 @@ tables below.
 \end{minipage}
 \end{minipage}
 
-By setting $p_1$ and $p_2$ previously and using the Algorithm \ref{algorithm:pufferfish-check} in SMT solver, we get a solution
-of indicating whether this problem satisfies Pufferfish Privacy under these probabilities.
-In other words, we can also set $p_1$ and $p_2$ as variables and slightly change Algorithm \ref{algorithm:pufferfish-check}
-in order to get a solution of $p_1$ and $p_2$ satisfying the Pufferfish Privacy problem.
+By setting $p_1$ and $p_2$ previously and using Algorithm \ref{algorithm:pufferfish-check} in SMT solver, we get a solution
+of indicating whether this problem satisfies $\epsilon$-Pufferfish privacy under these probabilities.
+What's more, we can also set $p_1$ and $p_2$ as variables and slightly change Algorithm \ref{algorithm:pufferfish-check}
+so that SMT solver will return a solution of $p_1$ and $p_2$, meaning $\epsilon$-Pufferfish privacy
+is preserved under these values.
 
-\textit{Example 7.2} There's a well-known version of Noisy-max, where at the last step the maximal
-noisy result will be returned. The algorithm is described in Algorithm \ref{algorithm:noisy-max-bad}.
-This version has been proved to be wrong, i.e, it doesn't satisfy differential privacy.
-The Markov Chain part of this model is as same as in Algorithm \ref{algorithm:noisy-max}.
-The difference is that the maximal value, instead of corresponding index, is observed in Hidden Markov
-Model. For instance in state labeled $210$ at the bottom of Figure \ref{figure:hmm-noisy-max},
-$2$ will be observed instead of $0$. Use Algorithm \ref{algorithm:pufferfish-check}, we can easily
-check that this model doesn't satisfy $\ln 2-$differential privacy as desired.
+\textit{Example 7.2} There's a well-known variant version of Noisy Max, where at the last step the maximal
+noisy result will be returned, as described in Algorithm \ref{algorithm:noisy-max-bad}.
+This version has been mathematically proved to be wrong in the sense that it doesn't preserve differential privacy.
+We can use HMM to model this algorithm.
+To be specific, the Markov chain part of this model is as same as in Algorithm \ref{algorithm:noisy-max}.
+The difference is that the maximal value, instead of corresponding index, is observed in hidden Markov
+model. For instance in the noisy-added state labeled $(210)$,
+$2$ as the maximal value will be observed, while the correct version of Noisy Max observes corresponding index $0$. 
+Using our Pufferfish checking algorithm, we can easily check that
+Algorithm \ref{algorithm:noisy-max-bad} doesn't satisfy $\ln(2)$-differential privacy as desired.
 \begin{algorithm}
   \begin{algorithmic}[1]
     \Require{$0 \leq v_1, v_2, \ldots, v_n \leq 2$}
@@ -222,7 +230,7 @@ check that this model doesn't satisfy $\ln 2-$differential privacy as desired.
                  $\frac{1}{6}, \frac{1}{6}, \frac{2}{3}$}
         \EndMatch
       \EndFor
-      \State{find $1 \leq r \leq n$ such that
+      \State{find $\tilde{v}_r $ such that  $1 \leq r \leq n$,
         $\tilde{v}_r \geq \tilde{v}_j$ for every $1 \leq j \leq n$}
       \State{\Return {$\tilde{v}_r$} }
     \EndFunction

@@ -1,7 +1,7 @@
 
 Differential privacy is a privacy framework for design and analysis of
 data publishing mechanisms~\cite{D:06:DP,DR:14:AFDP}. In the
-framework, a \emph{data set} is an 
+framework, a \emph{data set} is an
 ordered collection of \emph{data entries}. Two data sets $\od$ and
 $\od'$ are \emph{neighbors} (written $\Delta (\od, \od') \leq 1$) if
 $\od$ and $\od'$ are identical except for one data entry. A \emph{data
@@ -10,7 +10,7 @@ randomized algorithm which takes a data set $\od$ as inputs. A
 mechanism satisfies $\epsilon$-differential privacy if its output
 distributions differ by the multiplicative factor $e^\epsilon$  at
 most on
-every neighboring data sets. 
+every neighboring data sets.
 
 \begin{definition}
   Let $\epsilon > 0$. A mechanism $\calM$ is
@@ -26,10 +26,10 @@ For any data entry $d$ in a data
 set $\od$, consider the data set $\od'$ obtained by removing $d$ from
 $\od$. Then $\Delta (\od, \od') \leq 1$. For any
 $\epsilon$-differentially private mechanism $\calM$, we have
-$e^{-\epsilon} \leq \Pr (\calM (\od') = r) \leq \Pr (\calM (\od) = r)
+$e^{-\epsilon} \Pr (\calM (\od') = r) \leq \Pr (\calM (\od) = r)
 \leq e^{\epsilon} \Pr (\calM (\od') = r)$ for every $r$. That is, the
 probabilities of observing $r$ are bounded by the multiplicative
-factor $e^{\epsilon}$ when the data entry $d$ is present or absent. 
+factor $e^{\epsilon}$ when the data entry $d$ is present or absent.
 Intuitively, $\epsilon$-differential privacy ensures similar output
 distributions on similar data sets. Limited information about each
 data entry is revealed. Individual privacy is hence preserved.
@@ -52,9 +52,9 @@ $\oD$ represents a data set drawn from a distribution $\theta \in
 \bbfD$. The set $\bbfD$ of distributions formalizes prior knowledge
 about data sets, such as whether data entries are independent or
 correlated. Moreover, a set $\bbfS$ of \emph{secrets} and
-$\bbfS_{\textmd{pairs}} \subseteq \bbfS \times \bbfS$ a set of
+a set $\bbfS_{\textmd{pairs}} \subseteq \bbfS \times \bbfS$ of
 \emph{discriminative secret pairs} formalize the information to be
-protected. Consider a pair $(s_i, s_j)$ of discreminative secrets and
+protected. Consider a pair $(s_i, s_j)$ of discriminative secrets and
 a data set $\oD$ drawn from $\theta \in \bbfD$. A mechanism $\calM$
 satisfies $\epsilon$-Pufferfish privacy if its output distributions
 differ by at most the multiplicative factor $e^{\epsilon}$ when
@@ -78,12 +78,11 @@ conditioned on the secrets $s_i$ and $s_j$.
 
 In the definition, $\Pr (s_i | \theta) \neq 0$ and $\Pr (s_j | \theta)
 \neq 0$ ensure the probabilities $\Pr (\calM (\oD) = r | s_i, \theta)$
-and $\Pr (\calM (\oD) = r | s_j, \theta)$ are defined. 
+and $\Pr (\calM (\oD) = r | s_j, \theta)$ are defined.
 $\Pr (\calM (\oD) = r | s, \theta)$ is the probability of observing
-$r$ conditioned the secret $s$ and the data set distribution $\theta$.
+$r$ conditioned on the secret $s$ and the data set distribution $\theta$.
 Recall that the distribution $\theta$ formalizes prior knowledge about
 data sets. Informally, $\epsilon$-Pufferfish privacy ensures similar
-output distributions on discriminative secrets and prior knowledge. 
+output distributions on discriminative secrets and prior knowledge.
 Since limited information is revealed from prior knowledge, each pair
 of discriminative secrets is protected.
-  

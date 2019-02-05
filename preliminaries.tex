@@ -15,8 +15,8 @@ to represent the likelihood of each state in HMMs.
 
 Let $H = ((S, p), \Obs, o)$ be an HMM and $\pi$ an initial state
 distribution. The HMM $H$ can be seen as a (randomized) generator for
-sequences of observations. The following procedure generate
-obersvation sequences of an arbitrary length:
+sequences of observations. The following procedure generates
+observation sequences of an arbitrary length:
 \begin{enumerate}
 \item $t \leftarrow 0$.
 \item Choose an initial state $s_0 \in S$ by the initial state
@@ -42,7 +42,7 @@ p), \Obs, o)$ with an initial state distribution $\pi$. Precisely,
   & = [o (s_0, \omega_0) \cdot \cdots \cdot
     \times o (s_k, \omega_k)] \times
       [\pi (s_0) \times p (s_0, s_1) \cdot \cdots
-    \cdot p (s_{k-1}, s_k)] 
+    \cdot p (s_{k-1}, s_k)]
     \nonumber
   \\
   & = \pi (s_0) o (s_0, \omega_0) \cdot
@@ -72,4 +72,4 @@ $t$~\cite{R:89:ATHMM}. Consider the following definition:
                       o (s', \omega_{t+1}).
   \label{hmm:inductive}
 \end{align}
-Then $\Pr (\overline{\omega} | H) = \sum_{s \in S} \alpha_k (s)$.
+Then $\Pr (\overline{\omega} | H) = \sum_{s \in S} \alpha_k (s)$. 

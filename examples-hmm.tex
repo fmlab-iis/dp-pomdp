@@ -65,8 +65,8 @@ privacy is undoubtedly intruded by our probabilistic inference.
       \draw[->,semithick]  (1,  0) -- (2,  0);
       \node at (1.5,-0.8) { $\frac{2}{3}$ };
       \draw[->,very thick] (1, -1) -- (2, -1);
-      
-\hide{      
+
+\hide{
       \path
       (i0) edge node[above] { $\frac{2}{3}$ } (o0)
       (i0) edge node { $\frac{1}{6}$ } (o1)
@@ -88,17 +88,17 @@ privacy is undoubtedly intruded by our probabilistic inference.
 \end{figure}
 
 \noindent
-\textit{Example 1.}
+\textit{Example 4.1.}
 To see how differential privacy works, let us consider the truncated
 $\frac{1}{2}$-geometric mechanism
-(Figure~\ref{figure:geometric-mechanism}). 
+(Figure~\ref{figure:geometric-mechanism}).
 In the figure, the states $0$, $1$, and $2$ denote the number of
 individuals contracting the disease; the states $\underline{0}$,
 $\underline{1}$, $\underline{2}$ denote the outputs of the
 mechanism. At the state $\underline{0}$, \textit{zero} is observed
-with probability $1$ but \textit{one} and \textit{two} can never be 
+with probability $1$ but \textit{one} and \textit{two} can never be
 observed. Similarly, the states $\underline{1}$ and $\underline{2}$
-only observe \textit{one} and \textit{two} respectively. 
+only observe \textit{one} and \textit{two} respectively.
 In the figure, thin arrows denote transitions with probability
 $\frac{1}{6}$; medium arrows denote transitions with probability
 $\frac{1}{3}$; thick arrows denote transitions with probability
@@ -110,7 +110,7 @@ Let us consider a data set whose two members (including John) contract
 the disease. Thus the number of individuals contracting the disease is
 $2$. From the state $2$, we see the mechanism answers
 \textit{zero}, \textit{one}, and \textit{two} with probabilities
-$\frac{1}{6}$, $\frac{1}{6}$, and $\frac{2}{3}$ respectively. 
+$\frac{1}{6}$, $\frac{1}{6}$, and $\frac{2}{3}$ respectively.
 Suppose we replace John with an individual who does not contract
 the disease. The number of individuals contracting the disease for the
 new data set is $1$. From the state $1$, we see the mechanism answers
@@ -118,16 +118,16 @@ new data set is $1$. From the state $1$, we see the mechanism answers
 $\frac{1}{3}$.
 
 If an attacker queries the number of individuals contracting the
-disease through the truncated $\frac{1}{2}$-geometric mechanism, 
+disease through the truncated $\frac{1}{2}$-geometric mechanism,
 he will get the answer \textit{two} with probability at least
-$\frac{1}{3}$ regardless of John's record. The truncated
+$\frac{1}{3}$, and at most $\frac{2}{3}$ regardless of John's record. The truncated
 $\frac{1}{2}$-geometric mechanism is known to be
 $\ln(2)$-differentially private. For any two similar data sets, the
 mechanism always have similar output distributions. Information
 revealed to attackers is therefore limited.
 
 \noindent
-\textit{Example 2.}
+\textit{Example 4.2.}
 It is interesting to see when differential privacy may fail. Consider
 a data set consisting of two family members and a contagious
 disease. An attacker will immedidately infer the number of individuals
@@ -146,7 +146,7 @@ it may reveal too much information \emph{when the attacker has prior
 
 
 \noindent
-\textit{Example 3.}
+\textit{Example 4.3.}
 Let us analyze the scenario in the previous example with the
 Pufferfish privacy framework. Suppose the attacker knows that the data
 set contains two family members and the disease is contagious. We
@@ -161,11 +161,11 @@ $0$ by the prior knowledge. The attacker observes \textit{zero}
 with probability $\frac{2}{3}$. The probabilities of observing
 \textit{zero} are $\frac{1}{6}$ and $\frac{2}{3}$ when a family
 has contracted the disease or not respectively. The
-$\frac{1}{2}$-geometric mechanism does not satisfy 
-$\ln(2)$-Pufferfish privacy. 
+$\frac{1}{2}$-geometric mechanism does not satisfy
+$\ln(2)$-Pufferfish privacy.
 
 \noindent
-\textit{Example 4.}
+\textit{Example 4.4.}
 Prior knowledge does not necessarily lead to privacy leak. Consider a
 non-contagious disease. An attacker may know that contracting the
 disease is an independent event with probability $p$. Even though the
@@ -233,21 +233,20 @@ summarizes observation probabilities.
 For observation \textit{zero}, it is not hard to check $\frac{1}{2}
 \times \frac{4-3p}{12-6p} \leq \frac{p^2 - 4p + 4}{6} \leq 2 \times
 \frac{4-3p}{12-6p}$ for any $0 < p < 1$. Similarly, we have
-$\frac{1}{2} \times 
+$\frac{1}{2} \times
 \frac{4-3p}{12-6p} \leq \frac{-2p^2 + 2p + 1}{6} \leq 2 \times
 \frac{4-3p}{12-6p}$ and $\frac{1}{2} \times \frac{2}{6-3p} \leq
 \frac{p^2 + 2p + 1}{6} \leq 2 \times \frac{2}{6-3p}$  for observations
 \textit{one} and \textit{two} respectively. Therefore, the
 $\frac{1}{2}$-geometric mechanism satisfies $\ln(2)$-Pufferfish
-privacy when contracting the disease is \emph{independent}. 
- 
+privacy when contracting the disease is \emph{independent}.
 In~\cite{KM:14:PFMPD}, it is shown that differential privacy is
 subsumed by Pufferfish privacy (Theorem~6.1). This example is an
 instance of the general theorem but formalized in hidden Markov
-models. 
+models.
 
 \noindent
-\textit{Example 5.}
+\textit{Example 4.5.}
 It is worth noting that independency of contracting disease is not
 necessary for Pufferfish privacy. Let the probabilities of $0$, $1$,
 and $2$ individuals contracting the disease are $p_0$, $p_1$, $p_2$
@@ -265,7 +264,7 @@ $\frac{\frac{1}{3}p_1 + \frac{1}{6}p_2}{p_1 + p_2}$,
 $\frac{\frac{1}{3}p_1 + \frac{1}{6}p_2}{p_1 + p_2}$, and
 $\frac{p_1 + 2p_2}{3(p_1 + p_2)}$ respectively. Choose $p_0 =
 \frac{1}{2}$, $p_1 = p_2 = \frac{1}{4}$. For the observation
-\textit{zero} we have, 
+\textit{zero} we have,
 $\frac{1}{8} =
 \frac{1}{2} \times \frac{\frac{1}{3}p_1 + \frac{1}{6}p_2}{p_1 + p_2}
 \leq
@@ -292,13 +291,14 @@ $
 \frac{1}{3}
 =
 \frac{1}{6} p_0 + \frac{1}{3} p_1 + \frac{2}{3} p_2
-\leq 
+\leq
 2 \times \frac{p_1 + 2p_2}{3(p_1 + p_2)}
 = 1$ for the observation \textit{two}. In other words, the
-$\frac{1}{2}$-geometric mechanism satisfies Pufferfish privacy for
+$\frac{1}{2}$-geometric mechanism satisfies $\ln(2)$-Pufferfish privacy for
 attackers with the prior distribution $(\frac{1}{2}, \frac{1}{4},
 \frac{1}{4})$ on the number of individuals contracting the disease.
-Suppose the distribution $(\frac{1}{2}, \frac{1}{4},
+
+To see the dependency between prior distribution, suppose $(\frac{1}{2}, \frac{1}{4},
 \frac{1}{4})$ is binomial. There is $0 \leq p \leq 1$ such that
 $(1-p)^2 = \frac{1}{2}$, $2p(1-p) = \frac{1}{4}$, and $p^2 =
 \frac{1}{4}$. From $p^2 = \frac{1}{4}$ and $0 \leq p$, we have $p =
@@ -308,5 +308,5 @@ binomial. Even though the prior distribution is not derived by
 independent contraction of the disease, $\frac{1}{2}$-geometric
 mechanism does not reveal too much information. Independency of
 contraction is not necessary for Pufferfish privacy on the geometric
-mechanism. 
+mechanism.
 
