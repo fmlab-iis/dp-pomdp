@@ -4,7 +4,7 @@
 Privacy has been a hotly debated issue since late nineteenth
 century~\cite{WB:90:RP}. With the advent of social media, privacy is
 perhaps one of the most relevant topics in the digital age as
-well. Indeed, numerous privacy measures for publishing data 
+well. Indeed, numerous privacy measures for publishing data
 have been proposed~\cite{S:2002:KAMPP,FWC:10:PPDP}. Whether these
 measures are taken properly and effectively concerns every
 individuals. The importance of privacy research is thus noted by the
@@ -15,12 +15,12 @@ formal method community as well~\cite{TW:09:FMP}.
 Differential privacy is a framework for the design of privacy
 measures~\cite{D:06:DP,DR:14:AFDP}. In the framework, data publishing
 mechanisms are formalized as randomized algorithms. On any input data
-set, such mechanisms return randomized answers to data users' queries. 
+set, such mechanisms return randomized answers to data users' queries.
 Output distributions naturally correspond to information released by
 data publishing mechanisms. In order to preserve privacy, data
 curators suffice to ensure that similar output distributions are
 yielded by mechanisms on similar input data sets. Thanks to its simple
-formalization, differential privacy moreover allows data curators 
+formalization, differential privacy moreover allows data curators
 to evaluate privacy and utility quantitatively. The framework
 subsequently attracts lots of attentions from academia and industry.
 
@@ -43,14 +43,14 @@ among entries in data sets (Theorem~2 in~\cite{KM:14:PFMPD}).
 Although privacy frameworks help data curators design data publishing
 mechanisms, they do not necessarily induce privacy-respecting
 mechanisms. In differential and Pufferfish privacy, data publishing
-mechanisms are analyzed with sophisticated mathematical tools. 
+mechanisms are analyzed with sophisticated mathematical tools.
 Misinterpretation of privacy proofs can lead to incorrect
-modifications or generalizations of privacy-respecting mechanisms. 
+modifications or generalizations of privacy-respecting mechanisms.
 Indeed, several published variations of differentially private
 mechanisms are shown to voilate privacy~\cite{DWWZK:18:DVDP}. The
 formal method community has also started to develop techniques for
 checking differentially private
-mechanisms~\cite{TKD:11:FVDPIS,GHHNP:13:LDTDP,BDGKZ:13:VCDP}. 
+mechanisms~\cite{TKD:11:FVDPIS,GHHNP:13:LDTDP,BDGKZ:13:VCDP}.
 
 % markov models as formal models for privacy analysis
 % hidden markov models
@@ -66,7 +66,7 @@ mechanisms are formalized as different Markov models and checked to
 satisfy differential privacy.
 
 We propose to formalize Pufferfish privacy on hidden Markov models. A
-data publishing mechanism is again the underlying Markov 
+data publishing mechanism is again the underlying Markov
 chain associated with a hidden Markov model. Attackers' prior
 knowledge is thus modeled by an initial state distribution. Based on
 our formalization, we give a formal model for the geometric mechanism
@@ -78,7 +78,11 @@ curators will be able to understand the Bayesian privacy framework
 through this work.
 
 We furthermore investigate the verification problem for Pufferfish
-privacy on hidden Markov models. 
+privacy on hidden Markov models. By showing the reduction from the 
+Boolean Satisfiability Problem(SAT), the verification problem proves
+to be NP-hard. However, by using Satisfiability Modulo Theories solvers,
+we design a verification algorithm and automatically verify Pufferfish
+privacy problems.
 
 % results
 

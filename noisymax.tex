@@ -118,7 +118,7 @@ data set who are strongly correlated, etc.
 
 \textit{Example 7.1} We describe a classic scenario of applying Noisy Max. Assume that there
 are $3$ diseases $\{A,B,C\}$ and $2$ members ${John, Alice}$ in the data set. People can observe which disease
-infects the most people. 
+infects the most people.
 In order to protect privacy, Noisy Max algorithm is applied to the results.
 We can also set some rule that if more than one disease infects the most people, the smallest index will be observed.
 There's one attacker who has some prior knowledge about some of the diseases and members in the data set:
@@ -195,22 +195,33 @@ tables below.
 \end{minipage}
 \end{minipage}
 
-By setting $p_1$ and $p_2$ previously and using Algorithm \ref{algorithm:pufferfish-check} in SMT solver, we get a solution
-of indicating whether this problem satisfies $\epsilon$-Pufferfish privacy under these probabilities.
+By setting values to $p_1$ and $p_2$ and using Algorithm \ref{algorithm:pufferfish-check}, we can get a solution
+showing whether it satisfies $\epsilon$-Pufferfish privacy under these values.
+In our implementation, we set $p_1 = 0.2$ and $p_2 = 0.4$, and use \zpython to check whether
+$\ln(2)$-Pufferfish privacy is satisfied. The SMT solver returns a ``sat'' result, together with an observation
+sequence $0$. This shows that $\ln(2)$-Pufferfish privacy is violated under the observation sequence $0$.
 What's more, we can also set $p_1$ and $p_2$ as variables and slightly change Algorithm \ref{algorithm:pufferfish-check}
-so that SMT solver will return a solution of $p_1$ and $p_2$, meaning $\epsilon$-Pufferfish privacy
+so that SMT solver will return a solution of $p_1$ and $p_2$ such that $\epsilon$-Pufferfish privacy
 is preserved under these values.
 
-\textit{Example 7.2} There's a well-known variant version of Noisy Max, where at the last step the maximal
+\textit{Example 7.2} There's a variant version of Noisy Max, where it follows the usual settings 
+except at the last step the maximal
 noisy result will be returned, as described in Algorithm \ref{algorithm:noisy-max-bad}.
-This version has been mathematically proved to be wrong in the sense that it doesn't preserve differential privacy.
+This version has been considered to be wrong(not strictly proved) in the sense that it doesn't preserve differential privacy.
 We can use HMM to model this algorithm.
 To be specific, the Markov chain part of this model is as same as in Algorithm \ref{algorithm:noisy-max}.
 The difference is that the maximal value, instead of corresponding index, is observed in hidden Markov
 model. For instance in the noisy-added state labeled $(210)$,
-$2$ as the maximal value will be observed, while the correct version of Noisy Max observes corresponding index $0$. 
-Using our Pufferfish checking algorithm, we can easily check that
-Algorithm \ref{algorithm:noisy-max-bad} doesn't satisfy $\ln(2)$-differential privacy as desired.
+$2$ as the maximal value will be observed, while in the correct version of Noisy Max the corresponding index $0$ is observed.
+Using our Pufferfish checking algorithm, we can easily check that whether
+Algorithm \ref{algorithm:noisy-max-bad} satisfies differential privacy.
+One important thing to be noted is that, in some cases where $n$ is small,
+differential privacy is still preserved.
+For instance our implementation returns ``unsat'' when $n=5$, meaning that
+$\ln(2)$-differential privacy is still preserved under this case.
+This result doesn't violate the general consideration of the algorithm;
+Instead, it shows that specific privacy scenarios can be verified using our algorithm.
+
 \begin{algorithm}
   \begin{algorithmic}[1]
     \Require{$0 \leq v_1, v_2, \ldots, v_n \leq 2$}

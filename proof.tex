@@ -10,7 +10,7 @@ has contracted the disease or not. Thus the initial distribution pair the attack
 $\textit{zero}$ are $\frac{2}{3}$ and $\frac{1}{6}$, this violates $\ln(2)$-Pufferfish privacy.
 \fi
 
-Several examples above, such as \textit{Example 4.3.}, are modeled in HMMs. 
+Several examples above, such as \textit{Example 4.3.}, are modeled in HMMs.
 Actually, we can model general Pufferfish privacy problems into HMMs and
 design algorithms to check whether the privacy is preserved.
 
@@ -38,10 +38,10 @@ That is, in Pufferfish framework, for every observation sequence $\overline{\ome
   \end{equation}
 no more than $0$.
 
-However, as we will show below, the problem is NP-hard.
+However, as we will show below, this problem is NP-hard.
 
 \begin{theorem}
-  The Pufferfish privacy problems in Hidden Markov Model is NP-hard.
+  The Pufferfish privacy problem in hidden Markov model is NP-hard.
 \end{theorem}
 
 \begin{proof}
@@ -49,10 +49,10 @@ However, as we will show below, the problem is NP-hard.
   expressions (\ref{max1}) and (\ref{max2}) is no more than $0$.
   Let's just simplify the problem by only having one initial distribution pair to compare
   so that we only need to find the observation sequence.
-  We will show this problem to maximize the difference is NP-hard by 
-  reducing SAT to it, which is known to be NP-hard. Assume we have a formula $F(x_1,\ldots,x_n)$ in conjuncted normal form,
+  We will show the problem to maximize the difference is NP-hard by
+  an reduction from SAT, which is known to be NP-hard. Assume we have a formula $F(x_1,\ldots,x_n)$ in conjuncted normal form,
   with $n(n>=3)$ variables and $m$ clauses, $C_1,\ldots,C_m$. We shall construct a hidden Markov model $H = (K, \Obs, o)$
-  such that with $\epsilon = \ln(4)$, expressions (\ref{max1}) and (\ref{max2}) will take maximal value $0$ 
+  such that with $\epsilon = \ln(4)$, expressions (\ref{max1}) and (\ref{max2}) will take maximal value $0$
   if and only if the formula $F(x_1,\ldots,x_n)$ is satisfiable.
 
   \textit{Construction.} The construction is similar to \cite{PCT:87:CMDP}. We first describe the Markov Chain $K =
@@ -85,7 +85,7 @@ However, as we will show below, the problem is NP-hard.
   the clause $C_i$ is chosen and then the assignment of each variable will be considered one by one
   in this clause. Once the assignment of a variable $x_j$ makes $C_i$ satisfied, immediately
   state $A_{i,j+1}$ or $B_{i,j+1}$ is reached. So at last if state $A'_{i,n+1}$ or $B'_{i,n+1}$
-  is reached, it means that the clause $C_i$ is not satisfied under this assignment. Now, we 
+  is reached, it means that the clause $C_i$ is not satisfied under this assignment. Now, we
   claim that  $\Pr (\calM (\oD_1) = \overline{\omega}) - 4 \times \Pr (\calM (\oD_2) = \overline{\omega})$ takes the maximal value $0$
   if and only if $\overline{\omega}$ is the observation sequence $X_1A_1X_2\ldots A_n \top$ such that
   formula $F(x_1,\ldots,x_n)$ is satisfied under assignment with $A_i \in \{T_i,F_i\}$ for each variable $x_i$
@@ -114,11 +114,10 @@ However, as we will show below, the problem is NP-hard.
 
   Finally from the process above, it's easy to see that
   $\Pr (\calM (\oD_1) = \overline{\omega}) - 4 \times \Pr (\calM (\oD_2) = \overline{\omega})$ takes the maximal value $0$
-  if and only if $F(x_1,\ldots,x_n)$ is satisfied under observation sequence $\overline{\omega}=X_1A_1X_2\ldots A_n \top$ 
+  if and only if $F(x_1,\ldots,x_n)$ is satisfied under observation sequence $\overline{\omega}=X_1A_1X_2\ldots A_n \top$
   with assignment $A_i \in \{T_i,F_i\}$ for each variable $x_i$.
-  We can also infer that if $\epsilon$ is slightly smaller than $\ln(4)$, the maximal value of
-  $\Pr (\calM (\oD_1) = \overline{\omega}) - e ^\epsilon \times \Pr (\calM (\oD_2) = \overline{\omega})$ will be more than $0$,
-  which violates $\epsilon$-Pufferfish privacy.
-  This indicates that the general problem for $\epsilon$-Pufferfish privacy is NP-hard.
+  Since to determine whether Pufferfish privacy is preserved
+  is equivalent to determine whether the maximal value is above $0$,
+  we prove that the general problem for $\epsilon$-Pufferfish privacy is NP-hard.
 
 \end{proof} 
