@@ -1,5 +1,5 @@
 
-We have developed a verification framework for 
+We have developed a verification framework for
 Pufferfish privacy, which subsumes
 the gradually eye-catching topic in security called differential privacy.
 We use hidden Markov models to model the Pufferfish privacy mechanisms and
@@ -8,13 +8,10 @@ Though, with the help of SMT solvers,
 we propose an automatic verification algorithm
 to check whether Pufferfish privacy is preserved.
 By investigating into several privacy scenarios, including the
-classical Noisy Max algorithm in differential privacy and its variant version, 
+classical Noisy Max algorithm in differential privacy and its variant version,
 private mechanisms are analyzed and our algorithm
-functions efficiently as verifying Pufferfish privacy.
+functions effectively as verifying Pufferfish privacy.
 In the future, it's interesting to model more sophisticated
-private mechanisms such as reactive systems. In that case,
-HMMs may not be sufficient since
-different queries may be asked.
-We have the interest in using partially observable
-Markov decision process as the model and investigate into
-the corresponding verification problem.
+private mechanisms such as reactive systems. And we may
+investigate into more mathematical models to model these systems.
+How to efficiently solve the corresponding verification problem is also challenging.

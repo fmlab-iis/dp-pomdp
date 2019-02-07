@@ -16,7 +16,7 @@
 
 \input{macros}
 
-\title{Partially Observable Markov Decision Processes}
+\title{Verifying Pufferfish Privacy in Hidden Markov Models}
 
 \begin{document}
 
@@ -26,12 +26,13 @@
 Pufferfish is a Bayesian privacy framework for evaluating
 privacy protection, which allows for attackers with some prior knowledge
 on the protected data. It subsumes differential privacy, an ongoing hot
-topic in security. However, many arising private mechanisms can't achieve
-the effect they claim and it's difficult to verify that. In this paper, we propose an automatic verification technique
+topic gaining more and more attention in security. However, many arising privacy-respecting mechanisms can't achieve
+the protection effect they claim and it's difficult to verify that. In this paper, we propose an automatic verification technique
 for Pufferfish privacy problems. We use hidden Markov models to model privacy scenarios
 and prove that the Pufferfish verification problem in HMMs is NP-hard.
-Though, with the help of Satisfiability Modulo Theories solver, a verification algorithm is designed
-and turns out to effectively verify classical privacy problems.
+With the help of Satisfiability Modulo Theories solvers, a verification algorithm is designed.
+We implement the algorithm in \zpython and it
+turns out to effectively verify classical privacy problems.
 \end{abstract}
 
 \section{Introduction}
@@ -46,7 +47,7 @@ and turns out to effectively verify classical privacy problems.
 \label{section:pufferfish}
 \input{pufferfish}
 
-\section{Hidden Markov Models}
+\section{Exapmles in Hidden Markov Models}
 \label{section:hmm}
 \input{examples-hmm}
 
@@ -54,7 +55,7 @@ and turns out to effectively verify classical privacy problems.
 \label{section:complexity}
 \input{proof}
 
-\section{Checking Pufferfish Privacy}
+\section{Verifying Pufferfish Privacy}
 \label{section:checking-pufferfish}
 \input{algorithm}
 
@@ -62,9 +63,9 @@ and turns out to effectively verify classical privacy problems.
 \label{section:noisy-max}
 \input{noisymax}
 
-\section{Conclusion}
-\label{section:conclusion}
-\input{conclusion}
+\section{Conclusions}
+\label{section:conclusions}
+\input{conclusions}
 
 \bibliographystyle{splncs03}
 \bibliography{refs}

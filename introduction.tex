@@ -78,11 +78,20 @@ curators will be able to understand the Bayesian privacy framework
 through this work.
 
 We furthermore investigate the verification problem for Pufferfish
-privacy on hidden Markov models. By showing the reduction from the 
+privacy on hidden Markov models. By showing the reduction from the
 Boolean Satisfiability Problem(SAT), the verification problem proves
-to be NP-hard. However, by using Satisfiability Modulo Theories solvers,
+to be NP-hard. Though, using Satisfiability Modulo Theories solvers,
 we design a verification algorithm and automatically verify Pufferfish
-privacy problems.
+privacy problems with our implementation in \zpython.
+
+The rest of the paper is organized as follows. Preliminaries are given in
+Section~\ref{section:preliminaries}. In Section~\ref{section:pufferfish}
+and Section~\ref{section:hmm}, we discuss Pufferfish privacy framework
+and several privacy examples modeling in HMMs. In Section~\ref{section:complexity}
+and Section~\ref{section:checking-pufferfish}, we investigate the complexity
+of verification problem in Pufferfish and design an automatic algorithm
+to verify it. A classical case study is given in Section~\ref{section:noisy-max}
+and conclusions are discussed in Section~\ref{section:conclusions}.
 
 % results
 

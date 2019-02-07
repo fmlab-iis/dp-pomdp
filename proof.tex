@@ -10,7 +10,6 @@ has contracted the disease or not. Thus the initial distribution pair the attack
 $\textit{zero}$ are $\frac{2}{3}$ and $\frac{1}{6}$, this violates $\ln(2)$-Pufferfish privacy.
 \fi
 
-Several examples above, such as \textit{Example 4.3.}, are modeled in HMMs.
 Actually, we can model general Pufferfish privacy problems into HMMs and
 design algorithms to check whether the privacy is preserved.
 
@@ -59,7 +58,7 @@ However, as we will show below, this problem is NP-hard.
   (S, p)$. $S$ contains a state group $A$ with six states $A_{ij}$, $A'_{ij}$, $T_{A ij}$, $T'_{Aij}$, $F_{Aij}$, $F'_{Aij}$ and
   a state group $B$ with six states $B_{ij}$, $B'_{ij}$, $T_{Bij}$, $T'_{Bij}$, $F_{Bij}$, $F'_{Bij}$
   for each clause $C_i$ and variable $x_j$. Besides, there are $4m$ states $A_{i,n+1}$, $A'_{i,n+1}$, $B_{i,n+1}$, $B'_{i,n+1}$ for each clause $C_i$.
-  The transition distribution $p$ is as followed. For group $A$, there are two transitions with same probability $\frac{1}{2}$ leading from
+  The transition distribution $p$ is as follows. For group $A$, there are two transitions with same probability $\frac{1}{2}$ leading from
   state $A_{ij}$ to $T_{Aij}$ and $F_{Aij}$ respectively; similarly there are two transitions leading with probability $\frac{1}{2}$
   from $A'_{ij}$ to $T'_{Aij}$ and $F'_{Aij}$. There's only one transition leading with certainty from $T_{Aij}$, $F_{Aij}$, $T'_{Aij}$, $F'_{Aij}$,
   to $A_{i,j+1}$, $A_{i,j+1}$, $A'_{i,j+1}$, $A'_{i,j+1}$ respectively with two exceptions: If $x_j$ appears positively in $C_i$,
@@ -116,8 +115,8 @@ However, as we will show below, this problem is NP-hard.
   $\Pr (\calM (\oD_1) = \overline{\omega}) - 4 \times \Pr (\calM (\oD_2) = \overline{\omega})$ takes the maximal value $0$
   if and only if $F(x_1,\ldots,x_n)$ is satisfied under observation sequence $\overline{\omega}=X_1A_1X_2\ldots A_n \top$
   with assignment $A_i \in \{T_i,F_i\}$ for each variable $x_i$.
-  Since to determine whether Pufferfish privacy is preserved
-  is equivalent to determine whether the maximal value is above $0$,
+  Since determining whether Pufferfish privacy is preserved
+  is equivalent to determining whether the maximal value is above $0$,
   we prove that the general problem for $\epsilon$-Pufferfish privacy is NP-hard.
 
 \end{proof} 

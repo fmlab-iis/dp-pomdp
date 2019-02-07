@@ -1,7 +1,7 @@
 
 \begin{algorithm}
   \begin{algorithmic}[1]
-    \Require{$H = ((S, p), \Obs, o)$ : an HMM; 
+    \Require{$H = ((S, p), \Obs, o)$ : an HMM;
       $\pi, \tau$ : state distributions on $S$; $c$ : a
       non-negative real number; $k$ : a positive integer}
     \Ensure{An SMT query $q$ such that $q$ is unsatisfiable iff
@@ -45,10 +45,10 @@
  \label{algorithm:pufferfish-check}
 \end{algorithm}
 
-Our next goal is to develop an algorithm to check
+Our next goal is to develop an algorithm to verify
 $\epsilon$-Pufferfish privacy on any given HMM. Since the problem is
 NP-hard, we will employ Satisfiability Modulo Theories (SMT) solvers
-in our algorithm. For all observation sequences of length $k$, we will 
+in our algorithm. For all observation sequences of length $k$, we will
 construct an SMT query to find a sequence violating
 $\epsilon$-Pufferfish privacy. If no such sequence can be found, the
 given HMM satisfies $\epsilon$-Pufferfish privacy for observation
@@ -57,16 +57,16 @@ sequences of length $k$.
 Let $H = ((S, p), \Obs, o)$ be an HMM, $\pi, \tau$ two initial state
 distributions on $S$, $c \geq 0$ a real number, and $k$ a positive
 integer. For a fixed observation sequence $\overline{\obs}$,
-computing the probability $\Pr (\overline{\obs} | \pi, 
+computing the probability $\Pr (\overline{\obs} | \pi,
 H)$ of observing $\overline{\obs}$ from $\pi$ can be done in
 polynomial time~\cite{R:89:ATHMM}. It is straightforward to check if
 $\Pr (\overline{\obs} | \pi, H) > c \cdot \Pr (\overline{\obs} |
 \tau, H)$ for any fixed observation sequence $\overline{\obs}$. One
 simply computes the respective probabilities and then checks the
-inequality. 
+inequality.
 
 Our algorithm exploits the efficient algorithm for computing the
-probability of observation sequences. Rather than a fixed observation 
+probability of observation sequences. Rather than a fixed observation
 sequence, we declare $k$ SMT variables $\mathsf{w_0}, \mathsf{w_1},
 \ldots, \mathsf{w_{k-1}}$ for observations at each step. The
 observation at each step is determined by one of the $k$ variables. To
@@ -93,19 +93,19 @@ simply replace the expression $o (s, \obs)$ with
 $\textmd{\textsc{Select}} (\mathsf{w}, \{ \obs_1, \obs_2, \ldots,
 \obs_m\}, o (s, \bullet))$ to leave the observation determined by the
 SMT variable $\mathsf{w}$. In the algorithm, we also use auxiliary
-functions. 
+functions.
 $\textmd{\textsc{Product}}(\mathit{smtExp}_0, \mathit{smtExp}_1,
 \ldots, \mathit{smtExp}_m)$
 returns the SMT expression denoting the product of
 $\mathit{smtExp}_0$, $\mathit{smtExp}_1, \ldots,$
-$\mathit{smtExp}_m$. Similarly, 
+$\mathit{smtExp}_m$. Similarly,
 $\textmd{\textsc{Sum}}(\mathit{smtExp}_0,$ $\mathit{smtExp}_1, \ldots,$
 $\mathit{smtExp}_m)$ returns the SMT expression for the sum
 of $\mathit{smtExp}_0$, $\mathit{smtExp}_1, \ldots,$
 $\mathit{smtExp}_m$. $\textmd{\textsc{Gt}} (\mathit{smtExp}_0,
 \mathit{smtExp}_1)$ returns the SMT expression for
 $\mathit{smtExp}_0$ greater than $\mathit{smtExp}_1$.
-Finally, 
+Finally,
 $\textmd{\textsc{Dot}} ([\mathsf{a_0}, \mathsf{a_1}, \ldots,$
 $\mathsf{a_n}], [\mathsf{b_0}, \mathsf{b_1}, \ldots, \mathsf{b_n}])$
 returns the SMT expression for the inner product of the two lists of
@@ -120,7 +120,7 @@ SMT expressions, namely,
 \]
 
 Algorithm~\ref{algorithm:pufferfish-check} is summarized in the
-following theorem. 
+following theorem.
 
 \begin{theorem}
   Let $H = ((S, p), \Obs, o)$ be an HMM, $\pi, \tau$ state

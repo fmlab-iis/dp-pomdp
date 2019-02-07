@@ -107,7 +107,7 @@ values from $(v_1, v_2, v_3) = (1, 2, 0)$ is $\frac{1}{3} \cdot
 \end{figure}
 
 In the literature of differential privacy~\cite{DR:14:AFDP,DWWZK:18:DVDP},
-Noisy Max is proved to efficiently protect privacy for neighboring data sets. For instance, the input
+Noisy Max is proved to effectively protect privacy for neighboring data sets. For instance, the input
 nodes at the top of Figure \ref{figure:hmm-noisy-max} labeled $011$ and $021$ are neighbors
 so that they have similar probabilities of having same observations. What's more,
 in the hidden Markov model, we can compute if some attacker has prior information
@@ -116,6 +116,7 @@ a range of things in prior, such as the probability $p$ of contracting some dise
 some strongly infectious disease $B$ which may infect the whole family, some members in the
 data set who are strongly correlated, etc.
 
+\noindent
 \textit{Example 7.1} We describe a classic scenario of applying Noisy Max. Assume that there
 are $3$ diseases $\{A,B,C\}$ and $2$ members ${John, Alice}$ in the data set. People can observe which disease
 infects the most people.
@@ -141,59 +142,59 @@ about disease $C$, a uniform
 distribution on $k$ among $\{1,2\}$ is taken. More starting probability could be computed by using the
 tables below.
 
+\vspace{0.05\textwidth}
 \begin{minipage}{\textwidth}
-\begin{minipage}[t]{0.4\textwidth}
- \centering
+\centering
+\begin{minipage}{0.4\textwidth}
+\centering
   \makeatletter\def\@captype{table}\makeatother\caption{Probabilities for node labeled $(i,j,k)$ under $\pi$ }
   \label{table:pi}
    \begin{tabular}{c|ccc}
 & 0 & 1 & 2 \\
       \hline
-      i
+      $i\vphantom{p^2}$
       & $(1-p_1)^2$
       & $2p_1(1-p_1)$
       & $p_1^2$
       \\
-      j
+      $j\vphantom{p^2}$
       & $(1-p_2)$
       & 0
       & $p_2$
       \\
-      k
+      $k\vphantom{p^2}$
       & 0
       & $\frac{1}{2}$
       & $\frac{1}{2}$
 \end{tabular}
 \end{minipage}
-\begin{minipage}[t]{0.2\textwidth}
-\centering
-\space
-\end{minipage}
-\begin{minipage}[t]{0.4\textwidth}
+\hspace{0.1\textwidth}
+\begin{minipage}{0.4\textwidth}
 \centering
   \makeatletter\def\@captype{table}\makeatother\caption{Probabilities for node labeled $(i,j,k)$ under $\tau$ }
   \label{table:tau}
-
    \begin{tabular}{c|ccc}
 & 0 & 1 & 2 \\
       \hline
-      i
+      $i\vphantom{p^2}$
       & $(1-p_1)^2$
       & $2p_1(1-p_1)$
       & $p_1^2$
       \\
-      j
+      $j\vphantom{p^2}$
       & $(1-p_2)$
       & 0
       & $p_2$
       \\
-      k
+      $k\vphantom{p^2}$
       & $\frac{1}{2}$
       & $\frac{1}{2}$
       & 0
 \end{tabular}
 \end{minipage}
 \end{minipage}
+\vspace{0.05\textwidth}
+
 
 By setting values to $p_1$ and $p_2$ and using Algorithm \ref{algorithm:pufferfish-check}, we can get a solution
 showing whether it satisfies $\epsilon$-Pufferfish privacy under these values.
@@ -204,15 +205,16 @@ What's more, we can also set $p_1$ and $p_2$ as variables and slightly change Al
 so that SMT solver will return a solution of $p_1$ and $p_2$ such that $\epsilon$-Pufferfish privacy
 is preserved under these values.
 
-\textit{Example 7.2} There's a variant version of Noisy Max, where it follows the usual settings 
+\noindent
+\textit{Example 7.2} There's a variant version of Noisy Max, where it follows the usual settings
 except at the last step the maximal
 noisy result will be returned, as described in Algorithm \ref{algorithm:noisy-max-bad}.
 This version has been considered to be wrong(not strictly proved) in the sense that it doesn't preserve differential privacy.
 We can use HMM to model this algorithm.
 To be specific, the Markov chain part of this model is as same as in Algorithm \ref{algorithm:noisy-max}.
 The difference is that the maximal value, instead of corresponding index, is observed in hidden Markov
-model. For instance in the noisy-added state labeled $(210)$,
-$2$ as the maximal value will be observed, while in the correct version of Noisy Max the corresponding index $0$ is observed.
+model. For instance in the noisy-added state labeled $210$,
+$2$ as the maximal value will be observed, while in the correct version of Noisy Max the corresponding index $1$ of $\tilde{v}_1$ is observed.
 Using our Pufferfish checking algorithm, we can easily check that whether
 Algorithm \ref{algorithm:noisy-max-bad} satisfies differential privacy.
 One important thing to be noted is that, in some cases where $n$ is small,
