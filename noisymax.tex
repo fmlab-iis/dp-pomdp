@@ -124,9 +124,9 @@ In order to protect privacy, Noisy Max algorithm is applied to the results.
 We can also set some rule that if more than one disease infects the most people, the smallest index will be observed.
 There's one attacker who has some prior knowledge about some of the diseases and members in the data set:
 For disease $A$, usually people will contract the disease with probability $p_1$;
-For disease $B$, it is highly contagious so that the family members John and Alice will contract
+for disease $B$, it is highly contagious so that the family members John and Alice will contract
 it at the same time with probability $p_2$ or neither will contract it;
-The attacker doesn't have any information about disease $C$. Now we want to figure out,
+the attacker doesn't have any information about disease $C$. Now we want to figure out,
 is there much difference in observations between John contracts disease $C$ and John doesn't with those prior knowledge?
 That is, we want to know whether this model satisfies some $\epsilon$-Pufferfish privacy.
 
@@ -222,7 +222,7 @@ differential privacy is still preserved.
 For instance our implementation returns ``unsat'' when $n=5$, meaning that
 $\ln(2)$-differential privacy is still preserved under this case.
 This result doesn't violate the general consideration of the algorithm;
-Instead, it shows that specific privacy scenarios can be verified using our algorithm.
+instead, it shows that specific privacy scenarios can be verified using our algorithm.
 
 \begin{algorithm}
   \begin{algorithmic}[1]
